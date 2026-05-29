@@ -9,170 +9,73 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-/* ── THEME VARS ── */
 [data-theme="dark"]{
-  --bg-base:#050a18;
-  --bg2:#060d1e;
-  --glass:rgba(255,255,255,0.08);
-  --glass2:rgba(255,255,255,0.13);
+  --bg-base:#050a18;--bg2:#060d1e;
+  --glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);
   --glass-hover:rgba(255,255,255,0.16);
-  --glass-border:rgba(255,255,255,0.18);
-  --glass-border2:rgba(255,255,255,0.28);
-  --text:#f0f4ff;
-  --muted:rgba(240,244,255,0.55);
-  --muted2:rgba(240,244,255,0.35);
-  --nav-bg:rgba(5,10,24,0.70);
-  --footer-bg:rgba(5,10,24,0.80);
-  --orb1:rgba(110,231,183,0.13);
-  --orb2:rgba(167,139,250,0.15);
-  --orb3:rgba(249,168,212,0.10);
-  --orb4:rgba(96,165,250,0.10);
+  --glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);
+  --text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);
+  --nav-bg:rgba(5,10,24,0.70);--footer-bg:rgba(5,10,24,0.80);
+  --orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);
+  --orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);
   --card-shine:rgba(255,255,255,0.04);
 }
 [data-theme="light"]{
-  --bg-base:#e8f0fe;
-  --bg2:#dce8fc;
-  --glass:rgba(255,255,255,0.55);
-  --glass2:rgba(255,255,255,0.72);
+  --bg-base:#e8f0fe;--bg2:#dce8fc;
+  --glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);
   --glass-hover:rgba(255,255,255,0.80);
-  --glass-border:rgba(100,140,200,0.22);
-  --glass-border2:rgba(100,140,200,0.40);
-  --text:#0d1b3e;
-  --muted:rgba(13,27,62,0.60);
-  --muted2:rgba(13,27,62,0.35);
-  --nav-bg:rgba(220,232,252,0.80);
-  --footer-bg:rgba(210,225,250,0.85);
-  --orb1:rgba(52,211,153,0.20);
-  --orb2:rgba(139,92,246,0.18);
-  --orb3:rgba(244,114,182,0.15);
-  --orb4:rgba(59,130,246,0.15);
+  --glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);
+  --text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);
+  --nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);
+  --orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);
+  --orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);
   --card-shine:rgba(255,255,255,0.55);
 }
-
 :root{
-  --accent1:#6EE7B7;
-  --accent2:#A78BFA;
-  --accent3:#F9A8D4;
-  --accent4:#60A5FA;
-  --gold:#FFD27F;
-  --silver:#C8D6E5;
-  --blur:blur(20px);
-  --blur2:blur(32px);
+  --accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;
+  --gold:#FFD27F;--silver:#C8D6E5;
+  --blur:blur(20px);--blur2:blur(32px);
 }
 
 html{scroll-behavior:smooth}
 body{
-  font-family:'Outfit',sans-serif;
-  background:var(--bg-base);
-  color:var(--text);
-  overflow-x:hidden;
-  min-height:100vh;
-  transition:background 0.5s, color 0.5s;
+  font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);
+  overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;
+  user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;
 }
 
 /* ── LOADER ── */
 #loader{
   position:fixed;inset:0;z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2rem;
-  background:var(--bg-base);
-  transition:opacity 0.6s ease, transform 0.6s ease;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  background:var(--bg-base);transition:opacity 0.6s ease,transform 0.6s ease;
 }
 #loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
-.loader-canvas{position:relative;width:180px;height:180px}
-.loader-svg{width:100%;height:100%}
-.loader-text{
-  font-size:1rem;font-weight:500;color:var(--muted);
-  letter-spacing:0.04em;
-  animation:blink 1.8s ease-in-out infinite;
-}
+.loader-svg{width:180px;height:180px}
+.loader-text{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;animation:blink 1.8s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.5}50%{opacity:1}}
 
-/* ── BG CANVAS ── */
-#bg-canvas{position:fixed;inset:0;z-index:0;transition:opacity 0.5s}
-.bg-static{
-  position:fixed;inset:0;z-index:0;
-  background:var(--bg-base);
-  transition:background 0.5s;
-}
-
-/* ── SCIENCE PARTICLES ── */
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.sci-elem{
-  position:absolute;opacity:0;
-  font-size:1.1rem;
-  animation:floatUp 12s ease-in-out infinite;
-  filter:blur(0.3px);
-}
-@keyframes floatUp{
-  0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.8)}
-  10%{opacity:0.18}
-  80%{opacity:0.12}
-  100%{opacity:0;transform:translateY(-90vh) rotate(360deg) scale(1.1)}
-}
-
-/* ── ORBS ── */
-.orb{
-  position:fixed;border-radius:50%;
-  filter:blur(80px);z-index:0;pointer-events:none;
-  animation:orbDrift 20s ease-in-out infinite alternate;
-  transition:background 0.5s;
-}
+/* ── BG ── */
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.5s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.5s}
 .orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
 .orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
 .orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
 .orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
-@keyframes orbDrift{
-  0%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(30px,-20px) scale(1.06)}
-  66%{transform:translate(-15px,35px) scale(0.96)}
-  100%{transform:translate(20px,15px) scale(1.04)}
-}
+@keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;width:100%;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.9rem 3rem;
-  background:var(--nav-bg);
-  backdrop-filter:var(--blur2) saturate(1.8);
-  -webkit-backdrop-filter:var(--blur2) saturate(1.8);
-  border-bottom:1px solid var(--glass-border);
-  transition:background 0.5s,border-color 0.5s;
-}
-.nav-logo{
-  font-family:'DM Serif Display',serif;font-size:1.2rem;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  letter-spacing:0.01em;cursor:pointer;
-}
-.nav-links{display:flex;gap:0.3rem;list-style:none;align-items:center}
-.nav-links a{
-  text-decoration:none;color:var(--muted);font-size:0.8rem;
-  font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
-  padding:0.45rem 0.9rem;border-radius:10px;
-  transition:color 0.25s,background 0.25s;
-  position:relative;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-  width:0;height:2px;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  transition:width 0.3s ease;
-}
-.nav-links a:hover{color:var(--text)}
-.nav-links a:hover::after,.nav-links a.active::after{width:60%}
-.nav-links a.active{color:var(--accent1)}
+/* ── SCIENCE PARTICLES ── */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sci-elem{position:absolute;opacity:0;animation:floatUp 12s ease-in-out infinite;filter:blur(0.3px)}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.8)}10%{opacity:0.15}80%{opacity:0.08}100%{opacity:0;transform:translateY(-90vh) rotate(360deg) scale(1.1)}}
 
 /* ── THEME TOGGLE ── */
 .theme-btn{
   width:52px;height:28px;border-radius:999px;cursor:pointer;
-  border:1.5px solid var(--glass-border2);
-  background:var(--glass2);
+  border:1.5px solid var(--glass-border2);background:var(--glass2);
   backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
   position:relative;overflow:hidden;
-  transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;
-  flex-shrink:0;
+  transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0;
 }
 .theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
 .theme-thumb{
@@ -180,35 +83,72 @@ nav{
   width:20px;height:20px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent1),var(--accent2));
   transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
-  display:flex;align-items:center;justify-content:center;font-size:0.7rem;
+  display:flex;align-items:center;justify-content:center;
   box-shadow:0 2px 8px rgba(0,0,0,0.3);
 }
-[data-theme="light"] .theme-thumb{transform:translateX(24px)}
+/* dark = right, light = left */
+[data-theme="dark"] .theme-thumb{transform:translateX(24px)}
+[data-theme="light"] .theme-thumb{transform:translateX(0px)}
 
-/* ── PAGE SYSTEM ── */
-.page{display:none;position:relative;z-index:1;min-height:100vh;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both}
-.page.active{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);
+  -webkit-backdrop-filter:var(--blur2) saturate(2);
+  border:1.5px solid var(--glass-border2);
+  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
+  transition:background 0.4s,border-color 0.4s;
+}
+.bnav-btn{
+  padding:0.52rem 1.15rem;border-radius:999px;
+  font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
+  cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);
+  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;
+}
+.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
+.bnav-btn.active{
+  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
+  color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.bnav-btn.active::before{
+  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:18px;height:2.5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+}
 
-section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
+/* ── NAV LOGO AREA (no full nav, just logo + theme) ── */
+.top-bar{
+  position:fixed;top:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 2.5rem;
+  background:var(--nav-bg);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border-bottom:1px solid var(--glass-border);
+  transition:background 0.5s,border-color 0.5s;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;font-size:1.2rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.01em;cursor:pointer;text-decoration:none;
+}
 
 /* ── HERO ── */
-#hero-page{display:none}
-#hero-page.active{
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:1.6rem;text-align:center;
-  padding-top:8rem;padding-bottom:4rem;
-  min-height:100vh;position:relative;z-index:1;
-  animation:pageIn 0.6s ease both;
+#hero-page{
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  gap:1.6rem;text-align:center;padding:9rem 2rem 6rem;min-height:100vh;
+  position:relative;z-index:1;animation:pageIn 0.6s ease both;
 }
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
 .hero-tag{
   display:inline-flex;align-items:center;gap:0.5rem;
-  background:rgba(110,231,183,0.10);
-  border:1px solid rgba(110,231,183,0.28);
+  background:rgba(110,231,183,0.10);border:1px solid rgba(110,231,183,0.28);
   color:var(--accent1);font-size:0.78rem;font-weight:600;
   letter-spacing:0.12em;text-transform:uppercase;
-  padding:0.4rem 1.1rem;border-radius:999px;
-  animation:fadein 0.7s ease both;
+  padding:0.4rem 1.1rem;border-radius:999px;animation:fadein 0.7s ease both;
 }
 .hero-name{
   font-family:'DM Serif Display',serif;
@@ -227,6 +167,7 @@ section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
   padding:0.38rem 0.95rem;border-radius:999px;font-size:0.8rem;font-weight:500;
   background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
   transition:transform 0.2s,background 0.2s,box-shadow 0.2s;cursor:default;
+  display:inline-flex;align-items:center;gap:0.35rem;
 }
 .pill:hover{transform:translateY(-2px) scale(1.04);background:var(--glass2);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
 .pill.teal{background:rgba(110,231,183,0.10);border-color:rgba(110,231,183,0.28);color:var(--accent1)}
@@ -234,29 +175,23 @@ section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
 .pill.pink{background:rgba(249,168,212,0.10);border-color:rgba(249,168,212,0.28);color:var(--accent3)}
 .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadein 1s 0.4s ease both}
 
-/* ── ABOUT CARD IN HERO ── */
+/* ── ABOUT GLASS CARD ── */
 .about-glass{
-  max-width:760px;width:100%;
-  margin:1rem auto 0;
-  padding:2.5rem 2.5rem;
-  border-radius:28px;
-  background:var(--glass2);
-  backdrop-filter:var(--blur2) saturate(1.8);
-  -webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  max-width:760px;width:100%;margin:1rem auto 0;padding:2.5rem;
+  border-radius:28px;background:var(--glass2);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
   border:1px solid var(--glass-border2);
   box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.15);
-  text-align:left;
-  animation:fadein 1s 0.5s ease both;
-  position:relative;overflow:hidden;
+  text-align:left;animation:fadein 1s 0.5s ease both;position:relative;overflow:hidden;
 }
 .about-glass::before{
-  content:'';position:absolute;top:-60px;right:-60px;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);
-  pointer-events:none;
+  content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);pointer-events:none;
 }
 .about-glass p{color:var(--muted);line-height:1.8;font-size:0.95rem}
 .about-glass p strong{color:var(--text);font-weight:600}
+.about-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.1rem}
+.about-label span{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)}
 .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1.5rem}
 .stat-card{
   padding:1rem;border-radius:16px;text-align:center;
@@ -265,9 +200,7 @@ section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
 }
 .stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
 .stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1}
-.stat-num.teal{color:var(--accent1)}
-.stat-num.purple{color:var(--accent2)}
-.stat-num.pink{color:var(--accent3)}
+.stat-num.teal{color:var(--accent1)}.stat-num.purple{color:var(--accent2)}.stat-num.pink{color:var(--accent3)}
 .stat-label{font-size:0.7rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase}
 
 /* ── BTNS ── */
@@ -275,18 +208,12 @@ section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
   padding:0.75rem 2rem;border-radius:999px;font-size:0.88rem;
   font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;
   transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;border:none;
 }
-.btn::after{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:rgba(255,255,255,0);transition:background 0.2s;
-}
-.btn:hover::after{background:rgba(255,255,255,0.07)}
 .btn:hover{transform:translateY(-3px) scale(1.03)}
 .btn:active{transform:scale(0.97)}
 .btn-primary{
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  color:#04081a;border:none;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#04081a;
   box-shadow:0 0 20px rgba(110,231,183,0.28);
 }
 .btn-primary:hover{box-shadow:0 0 36px rgba(110,231,183,0.50)}
@@ -296,181 +223,13 @@ section{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
 }
 .btn-ghost:hover{border-color:rgba(255,255,255,0.40);background:var(--glass-hover)}
 
-@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-
-/* ── SECTION HEADING ── */
-.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.4rem}
-.section-title{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(1.9rem,3.5vw,2.7rem);
-  color:var(--text);line-height:1.15;margin-bottom:0.8rem;
-}
-.divider{
-  width:40px;height:3px;border-radius:3px;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  margin-bottom:2.5rem;
-}
-
-/* ── GLASS CARD BASE ── */
-.gcard{
-  background:var(--glass2);
-  backdrop-filter:var(--blur) saturate(1.6);
-  -webkit-backdrop-filter:var(--blur) saturate(1.6);
-  border:1px solid var(--glass-border2);
-  border-radius:22px;
-  box-shadow:0 4px 32px rgba(0,0,0,0.12),inset 0 1px 0 var(--card-shine);
-  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s,background 0.25s;
-}
-.gcard:hover{
-  transform:translateY(-5px);
-  box-shadow:0 12px 48px rgba(0,0,0,0.22),inset 0 1px 0 rgba(255,255,255,0.20);
-  background:var(--glass-hover);
-}
-
-/* ── SKILLS PAGE ── */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem}
-.skill-card{
-  padding:1.6rem;
-  background:var(--glass2);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border2);
-  border-radius:22px;
-  box-shadow:0 4px 24px rgba(0,0,0,0.10),inset 0 1px 0 var(--card-shine);
-  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s;
-}
-.skill-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 48px rgba(0,0,0,0.20)}
-.skill-icon{
-  width:46px;height:46px;border-radius:13px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.45rem;margin-bottom:1rem;
-  border:1px solid var(--glass-border);
-}
-.skill-icon.teal{background:rgba(110,231,183,0.14)}
-.skill-icon.purple{background:rgba(167,139,250,0.14)}
-.skill-icon.pink{background:rgba(249,168,212,0.14)}
-.skill-icon.gold{background:rgba(255,210,127,0.14)}
-.skill-title{font-weight:600;font-size:0.97rem;margin-bottom:0.4rem;color:var(--text)}
-.skill-desc{font-size:0.82rem;color:var(--muted);line-height:1.65}
-.skill-bar-wrap{margin-top:1rem;height:5px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden}
-.skill-bar{height:100%;border-radius:5px;animation:grow 1.4s cubic-bezier(0.22,1,0.36,1) both}
-.skill-bar.teal{background:linear-gradient(90deg,var(--accent1),#34d399)}
-.skill-bar.purple{background:linear-gradient(90deg,var(--accent2),var(--accent3))}
-.skill-bar.pink{background:linear-gradient(90deg,var(--accent3),var(--accent2))}
-.skill-bar.gold{background:linear-gradient(90deg,var(--gold),#f59e0b)}
-@keyframes grow{from{width:0}}
-
-/* ── ACHIEVEMENTS PAGE ── */
-.ach-tabs{display:flex;gap:0.65rem;margin-bottom:2rem;flex-wrap:wrap}
-.ach-tab{
-  padding:0.5rem 1.3rem;border-radius:999px;font-size:0.82rem;font-weight:600;
-  cursor:pointer;border:1.5px solid var(--glass-border);
-  background:var(--glass);color:var(--muted);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
-}
-.ach-tab:hover{transform:scale(1.04);background:var(--glass2);color:var(--text)}
-.ach-tab.active{
-  background:rgba(110,231,183,0.14);
-  border-color:rgba(110,231,183,0.40);
-  color:var(--accent1);
-  box-shadow:0 0 16px rgba(110,231,183,0.20);
-  transform:scale(1.03);
-}
-.ach-panel{display:none;flex-direction:column;gap:1rem}
-.ach-panel.active{display:flex}
-.ach-item{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:1.25rem;
-  padding:1.3rem 1.5rem;border-radius:18px;
-  background:var(--glass2);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border2);
-  box-shadow:0 2px 16px rgba(0,0,0,0.08),inset 0 1px 0 var(--card-shine);
-  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s,border-color 0.22s;
-}
-.ach-item:hover{
-  transform:translateX(6px);
-  box-shadow:0 6px 28px rgba(0,0,0,0.16);
-  border-color:rgba(110,231,183,0.30);
-}
-.ach-medal{
-  width:44px;height:44px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;flex-shrink:0;
-  transition:transform 0.3s;
-}
-.ach-item:hover .ach-medal{transform:scale(1.15) rotate(8deg)}
-.ach-medal.gold{background:rgba(255,210,127,0.16);border:1.5px solid rgba(255,210,127,0.35)}
-.ach-medal.silver{background:rgba(200,214,229,0.14);border:1.5px solid rgba(200,214,229,0.30)}
-.ach-medal.blue{background:rgba(110,231,183,0.10);border:1.5px solid rgba(110,231,183,0.26)}
-.ach-body{min-width:0}
-.ach-title{font-weight:600;font-size:0.91rem;margin-bottom:0.3rem;line-height:1.45;color:var(--text)}
-.ach-org{font-size:0.77rem;color:var(--muted)}
-.ach-date{
-  font-size:0.73rem;color:var(--muted);white-space:nowrap;
-  background:var(--glass);padding:0.25rem 0.75rem;
-  border-radius:999px;flex-shrink:0;height:fit-content;
-  border:1px solid var(--glass-border);
-}
-.ach-badges{margin-top:0.4rem;display:flex;gap:0.4rem;flex-wrap:wrap}
-.ach-badge{
-  display:inline-block;font-size:0.67rem;font-weight:700;
-  letter-spacing:0.07em;text-transform:uppercase;
-  padding:0.22rem 0.6rem;border-radius:6px;
-}
-.ach-badge.gold{background:rgba(255,210,127,0.16);color:var(--gold);border:1px solid rgba(255,210,127,0.25)}
-.ach-badge.silver{background:rgba(200,214,229,0.14);color:var(--silver);border:1px solid rgba(200,214,229,0.22)}
-.ach-badge.teal{background:rgba(110,231,183,0.12);color:var(--accent1);border:1px solid rgba(110,231,183,0.22)}
-
-/* ── INTERESTS PAGE ── */
-.int-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
-.int-card{
-  padding:1.6rem;
-  background:var(--glass2);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border2);
-  border-radius:22px;
-  box-shadow:0 4px 24px rgba(0,0,0,0.10),inset 0 1px 0 var(--card-shine);
-  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s;
-}
-.int-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 48px rgba(0,0,0,0.20)}
-.int-emoji{font-size:2.1rem;margin-bottom:0.8rem;display:block;transition:transform 0.3s}
-.int-card:hover .int-emoji{transform:scale(1.2) rotate(-8deg)}
-.int-title{font-weight:600;margin-bottom:0.4rem;color:var(--text)}
-.int-desc{font-size:0.83rem;color:var(--muted);line-height:1.7}
-
-/* ── CONTACT INLINE ── */
-.contact-wrap{max-width:600px;margin:2rem auto 0;text-align:center}
-.contact-card{
-  padding:2.5rem 2rem;border-radius:28px;
-  background:var(--glass2);
-  backdrop-filter:var(--blur2) saturate(1.8);
-  -webkit-backdrop-filter:var(--blur2) saturate(1.8);
-  border:1px solid var(--glass-border2);
-  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 var(--card-shine);
-}
-.contact-card p{color:var(--muted);margin-bottom:1.8rem;line-height:1.7;font-size:0.92rem}
-.social-links{display:flex;justify-content:center;gap:0.9rem;flex-wrap:wrap}
-.social-btn{
-  display:flex;align-items:center;gap:0.5rem;
-  padding:0.65rem 1.35rem;border-radius:14px;font-size:0.84rem;
-  font-weight:600;text-decoration:none;
-  background:var(--glass);border:1.5px solid var(--glass-border2);color:var(--text);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),background 0.22s,box-shadow 0.22s;
-}
-.social-btn:hover{transform:translateY(-4px) scale(1.05);background:var(--glass2);box-shadow:0 6px 20px rgba(0,0,0,0.18)}
-.social-btn:active{transform:scale(0.97)}
-.social-btn svg{width:18px;height:18px;flex-shrink:0}
-
 /* ── FOOTER ── */
 footer{
-  position:relative;z-index:1;
-  border-top:1px solid var(--glass-border);
-  padding:1.6rem 3rem;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;
-  background:var(--footer-bg);
+  position:relative;z-index:1;border-top:1px solid var(--glass-border);
+  padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
   backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
-  transition:background 0.5s,border-color 0.5s;
+  transition:background 0.5s,border-color 0.5s;margin-bottom:100px;
 }
 .footer-logo{
   font-family:'DM Serif Display',serif;font-size:1.1rem;
@@ -478,62 +237,24 @@ footer{
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
-.footer-copy svg{width:14px;height:14px;opacity:0.55;flex-shrink:0}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* ── BOTTOM NAV MENU (liquid glass pill) ── */
-.bottom-nav{
-  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-  z-index:150;
-  display:flex;gap:0.25rem;
-  padding:0.45rem 0.6rem;
-  border-radius:999px;
-  background:var(--glass2);
-  backdrop-filter:var(--blur2) saturate(2);
-  -webkit-backdrop-filter:var(--blur2) saturate(2);
-  border:1.5px solid var(--glass-border2);
-  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
-  transition:background 0.4s,border-color 0.4s;
-}
-.bnav-btn{
-  padding:0.52rem 1.15rem;border-radius:999px;
-  font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
-  cursor:pointer;text-transform:uppercase;
-  border:none;background:transparent;color:var(--muted);
-  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);
-  position:relative;
-}
-.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
-.bnav-btn.active{
-  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
-  color:var(--text);
-  box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
-}
-.bnav-btn.active::before{
-  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
-  width:18px;height:2.5px;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-}
+/* ── LIGHT MODE ── */
+[data-theme="light"] .skill-bar-wrap{background:rgba(0,0,0,0.07)}
+[data-theme="light"] .orb1{opacity:0.7}[data-theme="light"] .orb2{opacity:0.7}
 
-/* ── RESPONSIVE ── */
 @media(max-width:768px){
-  nav{padding:0.9rem 1.2rem}
-  .nav-links{display:none}
-  section{padding:5rem 1.3rem 6rem}
+  .top-bar{padding:0.9rem 1.2rem}
   #hero-page{padding:6rem 1.3rem 8rem}
   .about-glass{padding:1.5rem}
-  footer{flex-direction:column;text-align:center;padding:1.2rem}
-  .bottom-nav{bottom:18px;padding:0.35rem 0.4rem}
-  .bnav-btn{padding:0.45rem 0.85rem;font-size:0.72rem}
+  .about-stats{grid-template-columns:repeat(3,1fr)}
+  footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}
+  .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
+  .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
 }
-
-/* ── LIGHT MODE SPECIFIC ── */
-[data-theme="light"] .skill-bar-wrap{background:rgba(0,0,0,0.07)}
-[data-theme="light"] .orb1{opacity:0.7}
-[data-theme="light"] .orb2{opacity:0.7}
 </style>
 </head>
 <body>
@@ -541,31 +262,20 @@ footer{
 <!-- LOADER -->
 <div id="loader">
   <svg class="loader-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-    <!-- DNA helix animated -->
     <defs>
       <linearGradient id="dnaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#6EE7B7"/>
-        <stop offset="100%" stop-color="#A78BFA"/>
+        <stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#A78BFA"/>
       </linearGradient>
       <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#A78BFA"/>
-        <stop offset="100%" stop-color="#F9A8D4"/>
+        <stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#F9A8D4"/>
       </linearGradient>
     </defs>
-    <!-- DNA strands -->
-    <path id="strand1" d="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165" fill="none" stroke="url(#dnaGrad)" stroke-width="3" stroke-linecap="round">
-      <animate attributeName="d" dur="2.5s" repeatCount="indefinite"
-        values="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165;
-                M70,20 Q30,45 70,70 Q110,95 70,120 Q30,145 70,165;
-                M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165"/>
+    <path d="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165" fill="none" stroke="url(#dnaGrad)" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165;M70,20 Q30,45 70,70 Q110,95 70,120 Q30,145 70,165;M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165"/>
     </path>
-    <path id="strand2" d="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165" fill="none" stroke="url(#dnaGrad2)" stroke-width="3" stroke-linecap="round">
-      <animate attributeName="d" dur="2.5s" repeatCount="indefinite"
-        values="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165;
-                M110,20 Q150,45 110,70 Q70,95 110,120 Q150,145 110,165;
-                M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165"/>
+    <path d="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165" fill="none" stroke="url(#dnaGrad2)" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165;M110,20 Q150,45 110,70 Q70,95 110,120 Q150,145 110,165;M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165"/>
     </path>
-    <!-- Rungs -->
     <g stroke="#6EE7B7" stroke-width="1.5" opacity="0.55">
       <line x1="70" y1="45" x2="110" y2="45"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
       <line x1="70" y1="70" x2="110" y2="70"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
@@ -573,299 +283,133 @@ footer{
       <line x1="70" y1="120" x2="110" y2="120"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
       <line x1="70" y1="145" x2="110" y2="145"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
     </g>
-    <!-- Atoms orbiting -->
     <circle cx="90" cy="90" r="22" fill="none" stroke="rgba(167,139,250,0.35)" stroke-width="1" stroke-dasharray="4 3">
       <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
     </circle>
     <circle cx="112" cy="90" r="5" fill="#A78BFA" opacity="0.8">
       <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="90" cy="90" r="16" fill="none" stroke="rgba(249,168,212,0.30)" stroke-width="1" stroke-dasharray="3 4">
-      <animateTransform attributeName="transform" type="rotate" from="360 90 90" to="0 90 90" dur="3s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="106" cy="90" r="4" fill="#F9A8D4" opacity="0.75">
-      <animateTransform attributeName="transform" type="rotate" from="360 90 90" to="0 90 90" dur="3s" repeatCount="indefinite"/>
-    </circle>
-    <!-- Center nucleus -->
     <circle cx="90" cy="90" r="7" fill="url(#dnaGrad)" opacity="0.9">
       <animate attributeName="r" values="7;9;7" dur="1.8s" repeatCount="indefinite"/>
     </circle>
   </svg>
-  <div class="loader-text">Halo, tunggu dulu yaa ✨</div>
+  <div class="loader-text">Hold on, loading something cool ✦</div>
 </div>
 
-<!-- BG -->
 <div class="bg-static"></div>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-<div class="orb orb4"></div>
-
-<!-- Floating science particles -->
+<div class="orb orb1"></div><div class="orb orb2"></div>
+<div class="orb orb3"></div><div class="orb orb4"></div>
 <div id="particles"></div>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-logo" onclick="showPage('home')">Hugaabrieel</span>
-  <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home');return false" id="nav-home" class="active">Home</a></li>
-    <li><a href="#" onclick="showPage('skills');return false" id="nav-skills">Skills</a></li>
-    <li><a href="#" onclick="showPage('achievements');return false" id="nav-achievements">Achievements</a></li>
-    <li><a href="#" onclick="showPage('interests');return false" id="nav-interests">Interests</a></li>
-    <li><a href="#" onclick="showPage('contact');return false" id="nav-contact">Contact</a></li>
-  </ul>
+<!-- TOP BAR (logo + theme only) -->
+<div class="top-bar">
+  <a href="index.html" class="nav-logo">Hugaabrieel</a>
   <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode">
     <div class="theme-thumb" id="themeThumb">
-      <span id="themeIcon">🌙</span>
+      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
     </div>
   </button>
-</nav>
-
-<!-- BOTTOM NAV PILL -->
-<div class="bottom-nav">
-  <button class="bnav-btn active" id="bnav-home" onclick="showPage('home')">Home</button>
-  <button class="bnav-btn" id="bnav-skills" onclick="showPage('skills')">Skills</button>
-  <button class="bnav-btn" id="bnav-achievements" onclick="showPage('achievements')">Awards</button>
-  <button class="bnav-btn" id="bnav-interests" onclick="showPage('interests')">Interests</button>
-  <button class="bnav-btn" id="bnav-contact" onclick="showPage('contact')">Contact</button>
 </div>
 
-<!-- ══ HOME / HERO PAGE ══ -->
-<div id="page-home" class="page active">
-  <div id="hero-page" class="active">
-    <span class="hero-tag">✦ Student · Scientist · Writer</span>
-    <h1 class="hero-name">Lambok Gabriel<br>Huga Nababan</h1>
-    <p class="hero-sub">Siswa SMAN 8 Jakarta yang passionate di Biologi, Kimia, dan Bahasa Inggris. Born in May · Taurus person 🌿</p>
-    <div class="hero-pills">
-      <span class="pill teal">🧬 Biology Enthusiast</span>
-      <span class="pill purple">⚗️ Chemistry Lover</span>
-      <span class="pill pink">✍️ Writer</span>
-      <span class="pill">🎵 K-Pop Fan</span>
-      <span class="pill">🐱 Cat Person</span>
-    </div>
-    <div class="hero-cta">
-      <button class="btn btn-primary" onclick="showPage('achievements')">See Achievements ✦</button>
-      <button class="btn btn-ghost" onclick="showPage('contact')">Get in Touch</button>
-    </div>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="index.html" class="bnav-btn active">Home</a>
+  <a href="skills.html" class="bnav-btn">Skills</a>
+  <a href="achievements.html" class="bnav-btn">Awards</a>
+  <a href="interests.html" class="bnav-btn">Interests</a>
+  <a href="about.html" class="bnav-btn">About</a>
+</div>
 
-    <!-- About card inline -->
-    <div class="about-glass">
-      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1.1rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)">About Me</span>
+<!-- HERO -->
+<div id="hero-page">
+  <span class="hero-tag">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+    Student · Scientist · Writer
+  </span>
+  <h1 class="hero-name">Lambok Gabriel<br>Huga Nababan</h1>
+  <p class="hero-sub">A student at SMAN 8 Jakarta, passionate about Biology, Chemistry, and the English Language. Born in May · Taurus person</p>
+  <div class="hero-pills">
+    <span class="pill teal">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      Biology Enthusiast
+    </span>
+    <span class="pill purple">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      Chemistry Lover
+    </span>
+    <span class="pill pink">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Writer
+    </span>
+    <span class="pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      K-Pop Fan
+    </span>
+    <span class="pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Cat Person
+    </span>
+  </div>
+  <div class="hero-cta">
+    <a href="achievements.html" class="btn btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+      See Achievements
+    </a>
+    <a href="about.html" class="btn btn-ghost">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      About Me
+    </a>
+  </div>
+
+  <!-- Quick about card -->
+  <div class="about-glass">
+    <div class="about-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>Quick Introduction</span>
+    </div>
+    <p>Hi there! I'm <strong>Lambok Gabriel Huga Nababan</strong>, the creator behind this website. My close friends and family usually call me <strong>Lambok</strong>, though some prefer to go with my middle names, <strong>Gabriel</strong> or <strong>Huga</strong>. Currently, I'm a student at <strong>SMAN 8 Jakarta</strong>. Fun fact: I was born in May, which makes my Chinese zodiac the <strong>Pig</strong>. I'm also a sleepy bookworm person too.</p>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num teal">9+</div>
+        <div class="stat-label">Achievements</div>
       </div>
-      <p>Hi there! I'm <strong>Lambok Gabriel Huga Nababan</strong>, the creator behind this website. My close friends and family usually call me <strong>Lambok</strong>, though some prefer to go with my middle names, <strong>Gabriel</strong> or <strong>Huga</strong>. Currently, I'm a student at <strong>SMAN 8 Jakarta</strong>. Fun fact: I was born in May, which makes my Chinese zodiac sign the <strong>Pig</strong>. I'm also a sleepy and bookworm person too 📚</p>
-      <div class="about-stats">
-        <div class="stat-card">
-          <div class="stat-num teal">9+</div>
-          <div class="stat-label">Achievements</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num purple">6</div>
-          <div class="stat-label">Medals</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num pink">♉</div>
-          <div class="stat-label">Taurus Person</div>
-        </div>
+      <div class="stat-card">
+        <div class="stat-num purple">6</div>
+        <div class="stat-label">Medals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num pink">&#9801;</div>
+        <div class="stat-label">Taurus Person</div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- ══ SKILLS PAGE ══ -->
-<div id="page-skills" class="page">
-  <section>
-    <div class="reveal">
-      <p class="section-label">What I Do</p>
-      <h2 class="section-title">Skills &amp; Passions</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <div class="skill-icon teal">🧬</div>
-        <div class="skill-title">Biologi</div>
-        <div class="skill-desc">Spesialisasi di anatomi &amp; fisiologi manusia dan hewan. Sudah memenangkan beberapa olimpiade biologi tingkat nasional.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar teal" style="width:90%"></div></div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon purple">⚗️</div>
-        <div class="skill-title">Kimia</div>
-        <div class="skill-desc">Passionate di kimia dengan background lomba sains. Kontribusi aktif di olimpiade sains multidisiplin.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar purple" style="width:78%"></div></div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon pink">🇬🇧</div>
-        <div class="skill-title">Bahasa Inggris</div>
-        <div class="skill-desc">Kemampuan Intermediate yang diakui secara nasional. Peserta olimpiade bahasa Inggris tingkat nasional.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar pink" style="width:82%"></div></div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon gold">✍️</div>
-        <div class="skill-title">Menulis</div>
-        <div class="skill-desc">Hobi menulis — dari catatan harian sampai esai. Peserta lomba esai tingkat nasional oleh UGM &amp; Kemenkes.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar gold" style="width:72%"></div></div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ══ ACHIEVEMENTS PAGE ══ -->
-<div id="page-achievements" class="page">
-  <section>
-    <div class="reveal">
-      <p class="section-label">Track Record</p>
-      <h2 class="section-title">Achievements</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="ach-tabs reveal">
-      <button class="ach-tab active" onclick="switchAch('shs',this)">Senior High School</button>
-      <button class="ach-tab" onclick="switchAch('jhs',this)">Junior High School</button>
-    </div>
-    <div id="ach-shs" class="ach-panel active">
-      <div class="ach-item reveal">
-        <div class="ach-medal gold">🥇</div>
-        <div class="ach-body">
-          <div class="ach-title">Olimpiade Nusantara Sains 2024 — Biologi</div>
-          <div class="ach-org">Lembaga Bina Prestasi Nusantara &amp; HMD Kimia Universitas Indonesia</div>
-          <div class="ach-badges"><span class="ach-badge gold">Emas + Best Award</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">22–23 Nov 2024</span>
-      </div>
-      <div class="ach-item reveal">
-        <div class="ach-medal silver">🥈</div>
-        <div class="ach-body">
-          <div class="ach-title">Olimpiade Sains Prestasi Pelajar — Biologi</div>
-          <div class="ach-org">Lembaga Prestasi Pelajar &amp; HIMAFI ITB</div>
-          <div class="ach-badges"><span class="ach-badge silver">Perak</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">04 Okt 2025</span>
-      </div>
-      <div class="ach-item reveal">
-        <div class="ach-medal blue">🏅</div>
-        <div class="ach-body">
-          <div class="ach-title">Academic Nusantara Olympiad 1.0 (AMNO) — Bahasa Inggris, Intermediate</div>
-          <div class="ach-org">PT. Pusat Prestasi Nusantara</div>
-          <div class="ach-badges"><span class="ach-badge teal">Peserta A+</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">11 Agt 2024</span>
-      </div>
-      <div class="ach-item reveal">
-        <div class="ach-medal blue">📝</div>
-        <div class="ach-body">
-          <div class="ach-title">AMSAC Vol. 2 2025 — Essay</div>
-          <div class="ach-org">UGM &amp; Kemenkes RI</div>
-          <div class="ach-badges"><span class="ach-badge teal">Peserta</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">10 Mei 2025</span>
-      </div>
-    </div>
-    <div id="ach-jhs" class="ach-panel">
-      <div class="ach-item reveal">
-        <div class="ach-medal gold">🥇</div>
-        <div class="ach-body">
-          <div class="ach-title">Kompetisi Biologi Siswa Indonesia — Biologi</div>
-          <div class="ach-org">Pusat Olimpiade Pelajar &amp; Smart Student</div>
-          <div class="ach-badges"><span class="ach-badge gold">Emas</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">14 Mei 2023</span>
-      </div>
-      <div class="ach-item reveal">
-        <div class="ach-medal silver">🥈</div>
-        <div class="ach-body">
-          <div class="ach-title">Olimpiade Bahasa — Bahasa Indonesia</div>
-          <div class="ach-org">Olimpiade Indonesia &amp; Pusat Olimpiade Pelajar</div>
-          <div class="ach-badges"><span class="ach-badge silver">Perak</span><span class="ach-badge teal">Nasional</span></div>
-        </div>
-        <span class="ach-date">12 Apr 2023</span>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ══ INTERESTS PAGE ══ -->
-<div id="page-interests" class="page">
-  <section>
-    <div class="reveal">
-      <p class="section-label">Outside the Lab</p>
-      <h2 class="section-title">Interests</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="int-grid">
-      <div class="int-card reveal">
-        <span class="int-emoji">✍️</span>
-        <div class="int-title">Menulis</div>
-        <div class="int-desc">Hobi yang bikin pegel tapi menyenangkan. Sering mencatat langsung di HP biar lebih simpel dan spontan.</div>
-      </div>
-      <div class="int-card reveal">
-        <span class="int-emoji">🧬</span>
-        <div class="int-title">Biologi Manusia &amp; Hewan</div>
-        <div class="int-desc">Suka banget eksplorasi tubuh manusia dan hewan — anatomi, fisiologi, sampai kedokteran. Tumbuhan? Bikin puyung dikit hehe.</div>
-      </div>
-      <div class="int-card reveal">
-        <span class="int-emoji">🎵</span>
-        <div class="int-title">K-Pop &amp; Music</div>
-        <div class="int-desc">Le Sserafim &amp; Ariana Grande adalah artis favorit. Spotify Wrapped tiap tahun pasti penuh lagu mereka!</div>
-      </div>
-      <div class="int-card reveal">
-        <span class="int-emoji">🐱</span>
-        <div class="int-title">Cat-Holic Person</div>
-        <div class="int-desc">Punya kucing di rumah dan suka banget sama mereka. Kucing itu selalu bikin hari jadi lebih baik hehe.</div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ══ CONTACT PAGE ══ -->
-<div id="page-contact" class="page">
-  <section style="display:flex;flex-direction:column;align-items:center">
-    <div class="reveal" style="text-align:center">
-      <p class="section-label">Let's Connect</p>
-      <h2 class="section-title">Get in Touch</h2>
-      <div class="divider" style="margin:0 auto 2.5rem"></div>
-    </div>
-    <div class="contact-card reveal" style="max-width:580px;width:100%">
-      <p>Looking to chat, team up on a project, or just say hi? You can find me on the social media platforms below!</p>
-      <div class="social-links">
-        <a href="https://www.instagram.com/hugaabrieel/" target="_blank" class="social-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-          </svg>
-          Instagram
-        </a>
-        <a href="https://www.threads.com/@hugaabrieel" target="_blank" class="social-btn">
-          <!-- Official Threads icon path -->
-          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-            <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.754-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 9.97c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.213.095.321.142 1.49.7 2.58 1.761 3.156 3.07.797 1.818.821 4.822-1.426 7.038-1.806 1.769-4.089 2.648-6.908 2.648Z"/>
-          </svg>
-          Threads
-        </a>
-        <a href="https://x.com/hugaabrieel" target="_blank" class="social-btn">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          X (Twitter)
-        </a>
-      </div>
-    </div>
-  </section>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <span class="footer-logo">Hugaabrieel</span>
   <div class="footer-copy">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/><path d="M16 3c0 4-8 4-8 8s8 4 8 8"/>
-    </svg>
-    © 2025 · Hugaabrieel
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/><path d="M16 3c0 4-8 4-8 8s8 4 8 8"/></svg>
+    &copy; 2025 · Hugaabrieel
   </div>
 </footer>
 
 <script>
-/* ── LOADER ── */
+/* block copy */
+document.addEventListener('copy',e=>{e.preventDefault();return false});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('dragstart',e=>e.preventDefault());
+
+/* loader */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
     document.getElementById('loader').classList.add('out');
@@ -873,69 +417,48 @@ window.addEventListener('load',()=>{
   },2200);
 });
 
-/* ── SCIENCE PARTICLES ── */
-const sciSymbols=['🧬','⚗️','🔬','🧪','🦠','💊','🫀','🧫','⚛️','🔭','🧲','💉','🦷','🧠','🫁'];
+/* particles - SVG-based science symbols */
+const sciSVGs=[
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/><path d="M2 12h10"/><circle cx="18" cy="18" r="4"/><path d="m20 16-4 4 2-2"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0zM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0z"/><path d="M1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122z"/></svg>`,
+];
+const colors=['var(--accent1)','var(--accent2)','var(--accent3)','var(--accent4)'];
 const pWrap=document.getElementById('particles');
-for(let i=0;i<18;i++){
+for(let i=0;i<16;i++){
   const el=document.createElement('div');
   el.className='sci-elem';
-  el.textContent=sciSymbols[Math.floor(Math.random()*sciSymbols.length)];
+  el.style.color=colors[Math.floor(Math.random()*colors.length)];
+  el.style.opacity='0.18';
+  el.innerHTML=sciSVGs[Math.floor(Math.random()*sciSVGs.length)];
   el.style.left=Math.random()*100+'%';
   el.style.animationDelay=(Math.random()*14)+'s';
   el.style.animationDuration=(10+Math.random()*8)+'s';
-  el.style.fontSize=(0.85+Math.random()*0.7)+'rem';
   pWrap.appendChild(el);
 }
 
-/* ── THEME ── */
+/* theme */
 function toggleTheme(){
   const html=document.documentElement;
   const isDark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',isDark?'light':'dark');
-  document.getElementById('themeIcon').textContent=isDark?'☀️':'🌙';
+  const newTheme=isDark?'light':'dark';
+  html.setAttribute('data-theme',newTheme);
+  localStorage.setItem('theme',newTheme);
+  updateThemeIcons(newTheme);
 }
-
-/* ── PAGE NAVIGATION ── */
-const pages=['home','skills','achievements','interests','contact'];
-function showPage(id){
-  pages.forEach(p=>{
-    document.getElementById('page-'+p).classList.remove('active');
-    const navEl=document.getElementById('nav-'+p);
-    const bnavEl=document.getElementById('bnav-'+p);
-    if(navEl)navEl.classList.remove('active');
-    if(bnavEl)bnavEl.classList.remove('active');
-  });
-  document.getElementById('page-'+id).classList.add('active');
-  const navEl=document.getElementById('nav-'+id);
-  const bnavEl=document.getElementById('bnav-'+id);
-  if(navEl)navEl.classList.add('active');
-  if(bnavEl)bnavEl.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  // Re-trigger reveals on new page
-  setTimeout(()=>triggerReveals(),100);
+function updateThemeIcons(t){
+  const sun=document.getElementById('themeIconSun');
+  const moon=document.getElementById('themeIconMoon');
+  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
+  else{sun.style.display='block';moon.style.display='none'}
 }
-
-/* ── ACHIEVEMENT TABS ── */
-function switchAch(id,btn){
-  document.querySelectorAll('.ach-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ach-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('ach-'+id).classList.add('active');
-  btn.classList.add('active');
-}
-
-/* ── SCROLL REVEAL ── */
-function triggerReveals(){
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){
-        setTimeout(()=>e.target.classList.add('visible'),i*90);
-        obs.unobserve(e.target);
-      }
-    });
-  },{threshold:0.10});
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
-}
-triggerReveals();
+/* restore saved theme */
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
+else{updateThemeIcons('dark');}
 </script>
 </body>
 </html>
