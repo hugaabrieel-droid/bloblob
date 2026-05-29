@@ -8,200 +8,163 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*, *::before, *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+}
 [data-theme="dark"]{--bg-base:#050a18;--bg2:#060d1e;--glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);--glass-hover:rgba(255,255,255,0.16);--glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);--text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);--nav-bg:rgba(5,10,24,0.70);--footer-bg:rgba(5,10,24,0.80);--orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);--orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);--card-shine:rgba(255,255,255,0.04)}
-[data-theme="light"]{--bg-base:#e8f0fe;--bg2:#dce8fc;--glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);--glass-hover:rgba(255,255,255,0.80);--glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);--text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);--nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);--orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);--orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);--card-shine:rgba(255,255,255,0.55)}
+[data-theme="light"]{--bg-base:#f3f6fc;--bg2:#e4ecfa;--glass:rgba(13,27,62,0.05);--glass2:rgba(13,27,62,0.09);--glass-hover:rgba(13,27,62,0.14);--glass-border:rgba(13,27,62,0.12);--glass-border2:rgba(13,27,62,0.22);--text:#0d1b3e;--muted:rgba(13,27,62,0.65);--muted2:rgba(13,27,62,0.40);--nav-bg:rgba(228,236,250,0.85);--footer-bg:rgba(228,236,250,0.90);--orb1:rgba(52,211,153,0.15);--orb2:rgba(139,92,246,0.12);--orb3:rgba(244,114,182,0.10);--orb4:rgba(59,130,246,0.12);--card-shine:rgba(255,255,255,0.40)}
 :root{--accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;--gold:#FFD27F;--silver:#C8D6E5;--blur:blur(20px);--blur2:blur(32px)}
 html{scroll-behavior:smooth}
-body{font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;user-select:none;-webkit-user-select:none;-moz-user-select:none}
-.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.5s}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.5s}
-.orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
-.orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
-.orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
-.orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
-@keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
-.top-bar{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);border-bottom:1px solid var(--glass-border);transition:background 0.5s,border-color 0.5s}
+body{
+  font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);overflow-x:hidden;min-height:100vh;
+  display:flex;flex-direction:column;user-select:none;-webkit-user-select:none;-moz-user-select:none
+}
+
+#loader{
+  position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;
+  background:var(--bg-base);transition:opacity 0.5s ease, transform 0.5s ease;
+}
+#loader.out{opacity:0;transform:scale(1.02);pointer-events:none}
+.loader-content{text-align:center}
+.loader-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:2.2rem;color:var(--text);letter-spacing:2px;display:block;margin-bottom:12px}
+.loader-bar{width:140px;height:3px;background:var(--glass2);border-radius:3px;overflow:hidden;margin:0 auto}
+.loader-progress{width:0;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));animation:loadRun 1s forwards cubic-bezier(0.1, 0.8, 0.3, 1)}
+@keyframes loadRun{to{width:100%}}
+
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;}
+.orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px}
+.orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px}
+.orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%}
+.orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%}
+
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sci-elem{position:absolute;opacity:0;animation:floatUp 14s ease-in-out infinite;filter:blur(0.2px)}
+@keyframes floatUp{0%{opacity:0;transform:translateY(100vh) rotate(0deg) scale(0.85)}15%{opacity:0.38}85%{opacity:0.38}100%{opacity:0;transform:translateY(-10vh) rotate(360deg) scale(1.15)}}
+
+.top-bar{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);border-bottom:1px solid var(--glass-border);}
 .nav-logo{font-family:'DM Serif Display',serif;font-size:1.2rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.01em;cursor:pointer;text-decoration:none}
-.theme-btn{width:52px;height:28px;border-radius:999px;cursor:pointer;border:1.5px solid var(--glass-border2);background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);position:relative;overflow:hidden;transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0}
+.theme-btn{width:52px;height:28px;border-radius:999px;cursor:pointer;border:1.5px solid var(--glass-border2);background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);position:relative;overflow:hidden;flex-shrink:0}
 .theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
-.theme-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.theme-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
 [data-theme="dark"] .theme-thumb{transform:translateX(24px)}
 [data-theme="light"] .theme-thumb{transform:translateX(0px)}
-.bottom-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);border:1.5px solid var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);transition:background 0.4s,border-color 0.4s}
-.bnav-btn{padding:0.52rem 1.15rem;border-radius:999px;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;text-decoration:none;display:inline-block}
-.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
-.bnav-btn.active{background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15)}
-.bnav-btn.active::before{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:18px;height:2.5px;border-radius:2px;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
-section{padding:7rem 3rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:1;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both}
-@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.4rem}
-.section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);color:var(--text);line-height:1.15;margin-bottom:0.8rem}
-.divider{width:40px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));margin-bottom:2.5rem}
-.ach-tabs{display:flex;gap:0.65rem;margin-bottom:2rem;flex-wrap:wrap}
-.ach-tab{padding:0.5rem 1.3rem;border-radius:999px;font-size:0.82rem;font-weight:600;cursor:pointer;border:1.5px solid var(--glass-border);background:var(--glass);color:var(--muted);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1)}
-.ach-tab:hover{transform:scale(1.04);background:var(--glass2);color:var(--text)}
-.ach-tab.active{background:rgba(110,231,183,0.14);border-color:rgba(110,231,183,0.40);color:var(--accent1);box-shadow:0 0 16px rgba(110,231,183,0.20);transform:scale(1.03)}
+
+.bottom-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);border:1.5px solid var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.1)}
+.bnav-btn{padding:0.52rem 1.15rem;border-radius:999px;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);text-decoration:none !important;display:inline-block}
+.bnav-btn:hover{color:var(--text);transform:scale(1.04)}
+.bnav-btn.active{background:var(--glass-hover);color:var(--text);box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+
+.container{flex:1;width:100%;max-width:900px;margin:0 auto;padding:7.5rem 2rem 6rem;position:relative;z-index:10}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;gap:1.5rem}
+@media(max-width:600px){.page-header{flex-direction:column;align-items:start;gap:1rem}}
+.page-title{font-family:'DM Serif Display',serif;font-size:2.8rem;font-weight:400;letter-spacing:-0.01em}
+
+.ach-tabs{display:flex;gap:0.4rem;background:var(--glass2);padding:0.3rem;border-radius:999px;border:1px solid var(--glass-border)}
+.ach-tab{padding:0.55rem 1.3rem;border-radius:999px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);border:none;background:transparent;cursor:pointer;transition:all 0.25s}
+.ach-tab:hover{color:var(--text)}
+.ach-tab.active{background:var(--glass-hover);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+
 .ach-panel{display:none;flex-direction:column;gap:1rem}
 .ach-panel.active{display:flex}
-.ach-item{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:1.25rem;padding:1.3rem 1.5rem;border-radius:18px;background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border2);box-shadow:0 2px 16px rgba(0,0,0,0.08),inset 0 1px 0 var(--card-shine);transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s,border-color 0.22s}
-.ach-item:hover{transform:translateX(6px);box-shadow:0 6px 28px rgba(0,0,0,0.16);border-color:rgba(110,231,183,0.30)}
-.ach-medal{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.3s}
-.ach-medal svg{width:22px;height:22px}
-.ach-item:hover .ach-medal{transform:scale(1.15) rotate(8deg)}
-.ach-medal.gold{background:rgba(255,210,127,0.16);border:1.5px solid rgba(255,210,127,0.35)}
-.ach-medal.silver{background:rgba(200,214,229,0.14);border:1.5px solid rgba(200,214,229,0.30)}
-.ach-medal.blue{background:rgba(110,231,183,0.10);border:1.5px solid rgba(110,231,183,0.26)}
-.ach-medal.purple{background:rgba(167,139,250,0.12);border:1.5px solid rgba(167,139,250,0.28)}
-.ach-body{min-width:0}
-.ach-title{font-weight:600;font-size:0.91rem;margin-bottom:0.3rem;line-height:1.45;color:var(--text)}
-.ach-org{font-size:0.77rem;color:var(--muted)}
-.ach-date{font-size:0.73rem;color:var(--muted);white-space:nowrap;background:var(--glass);padding:0.25rem 0.75rem;border-radius:999px;flex-shrink:0;height:fit-content;border:1px solid var(--glass-border)}
-.ach-badges{margin-top:0.4rem;display:flex;gap:0.4rem;flex-wrap:wrap}
-.ach-badge{display:inline-block;font-size:0.67rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:6px}
-.ach-badge.gold{background:rgba(255,210,127,0.16);color:var(--gold);border:1px solid rgba(255,210,127,0.25)}
-.ach-badge.silver{background:rgba(200,214,229,0.14);color:var(--silver);border:1px solid rgba(200,214,229,0.22)}
-.ach-badge.teal{background:rgba(110,231,183,0.12);color:var(--accent1);border:1px solid rgba(110,231,183,0.22)}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
-.reveal.visible{opacity:1;transform:none}
-footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);transition:background 0.5s,border-color 0.5s;margin-bottom:100px}
-.footer-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
-@media(max-width:768px){.top-bar{padding:0.9rem 1.2rem}section{padding:5.5rem 1.3rem 5rem}.ach-item{grid-template-columns:auto 1fr;}.ach-date{grid-column:2;margin-top:0.3rem}footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}.bottom-nav{bottom:14px;padding:0.35rem 0.4rem}.bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}}
+
+.ach-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:1.4rem 1.8rem;display:flex;gap:1.8rem;align-items:center;backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);opacity:0;transform:translateY(16px);transition:opacity 0.4s ease,transform 0.4s ease,background 0.3s}
+.ach-card.visible{opacity:1;transform:translateY(0)}
+.ach-card:hover{background:var(--glass-hover)}
+
+/* Poin 10: Dimensi khusus untuk wadah ikon medali baru agar presisi */
+.ach-icon-box{width:46px;height:46px;border-radius:14px;background:var(--glass2);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0}
+.ach-main-info{flex:1}
+.ach-card h3{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:500;margin-bottom:0.25rem}
+.ach-card p{font-size:0.82rem;color:var(--muted);font-weight:300}
+.ach-meta{text-align:right;flex-shrink:0}
+.ach-year{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent1);margin-bottom:0.15rem}
+.ach-tag{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted2)}
+
+@media(max-width:550px){
+  .ach-card{flex-direction:column;align-items:start;gap:1rem;padding:1.4rem}
+  .ach-meta{text-align:left}
+}
+
+footer{width:100%;padding:2rem 3rem;background:transparent;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--muted2);letter-spacing:0.05em;position:relative;z-index:10;margin-top:auto}
+.foot-c{display:flex;align-items:center;gap:0.4rem}
 </style>
 </head>
 <body>
+
+<div id="loader">
+  <div class="loader-content">
+    <span class="loader-text">TESIS 36</span>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
+  </div>
+</div>
+
 <div class="bg-static"></div>
 <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
+<div id="particles"></div>
 
 <div class="top-bar">
   <a href="index.html" class="nav-logo">Hugaabrieel</a>
-  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode">
-    <div class="theme-thumb">
-      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </div>
-  </button>
+  <div class="theme-btn" onclick="toggleTheme()">
+    <div class="theme-thumb"></div>
+  </div>
 </div>
 
-<div class="bottom-nav">
-  <a href="index.html" class="bnav-btn">Home</a>
-  <a href="skills.html" class="bnav-btn">Skills</a>
-  <a href="achievements.html" class="bnav-btn active">Achievements</a>
-  <a href="interests.html" class="bnav-btn">Interests</a>
+<div class="container">
+  <div class="page-header">
+    <h2 class="page-title">Achievements</h2>
+    <div class="ach-tabs">
+      <button class="ach-tab active" onclick="switchAch('olympiad',this)">Olympiads</button>
+    </div>
+  </div>
+
+  <div class="ach-panel active" id="ach-olympiad">
+    
+    <div class="ach-card">
+      <div class="ach-icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <div class="ach-main-info">
+        <h3>Bronze Medalist in National Biology Olympiad</h3>
+        <p>National Education & Science Olympiad — NEXUS 2026</p>
+      </div>
+      <div class="ach-meta">
+        <div class="ach-year">2026</div>
+        <div class="ach-tag">National</div>
+      </div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <div class="ach-main-info">
+        <h3>Bronze Medalist in English Competency</h3>
+        <p>National Education & Science Olympiad — NEXUS 2026</p>
+      </div>
+      <div class="ach-meta">
+        <div class="ach-year">2026</div>
+        <div class="ach-tag">National</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="bnav-btn">Index</a>
   <a href="about.html" class="bnav-btn">About</a>
-</div>
-
-<section>
-  <div class="reveal">
-    <p class="section-label">Track Record</p>
-    <h2 class="section-title">Achievements</h2>
-    <div class="divider"></div>
-  </div>
-  <div class="ach-tabs reveal">
-    <button class="ach-tab active" onclick="switchAch('shs',this)">Senior High School</button>
-    <button class="ach-tab" onclick="switchAch('jhs',this)">Junior High School</button>
-  </div>
-
-  <!-- SHS -->
-  <div id="ach-shs" class="ach-panel active">
-    <div class="ach-item reveal">
-      <div class="ach-medal gold">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/><polyline points="9 11 12 14 15 11"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Nusantara Science Olympiad 2024 — Biology</div>
-        <div class="ach-org">Lembaga Bina Prestasi Nusantara &amp; HMD Chemistry, Universitas Indonesia</div>
-        <div class="ach-badges"><span class="ach-badge gold">Gold + Best Award</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">22–23 Nov 2024</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Student Achievement Science Olympiad — Biology</div>
-        <div class="ach-org">Lembaga Prestasi Pelajar &amp; HIMAFI ITB</div>
-        <div class="ach-badges"><span class="ach-badge silver">Silver</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">04 Oct 2025</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">National Science Olympiad (OSNI) 2024 — Biology</div>
-        <div class="ach-org">Lembaga Olimpiade Sains Indonesia</div>
-        <div class="ach-badges"><span class="ach-badge silver">Silver</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">16 Nov 2024</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Extraordinary Science Achievement Award (PKS) — Biology</div>
-        <div class="ach-org">PT. Pusat Prestasi Nusantara</div>
-        <div class="ach-badges"><span class="ach-badge teal">Participant A+</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">02 Mar 2025</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Academic Nusantara Olympiad 1.0 (AMNO) — English, Intermediate</div>
-        <div class="ach-org">PT. Pusat Prestasi Nusantara</div>
-        <div class="ach-badges"><span class="ach-badge teal">Participant A+</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">11 Aug 2024</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal purple">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">AMSAC Vol. 2 2025 — Essay</div>
-        <div class="ach-org">UGM &amp; Kemenkes RI</div>
-        <div class="ach-badges"><span class="ach-badge teal">Participant</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">10 May 2025</span>
-    </div>
-  </div>
-
-  <!-- JHS -->
-  <div id="ach-jhs" class="ach-panel">
-    <div class="ach-item reveal">
-      <div class="ach-medal gold">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/><polyline points="9 11 12 14 15 11"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Indonesian Student Biology Competition — Biology</div>
-        <div class="ach-org">Pusat Olimpiade Pelajar &amp; Smart Student</div>
-        <div class="ach-badges"><span class="ach-badge gold">Gold</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">14 May 2023</span>
-    </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
-      </div>
-      <div class="ach-body">
-        <div class="ach-title">Language Olympiad — Indonesian Language</div>
-        <div class="ach-org">Olimpiade Indonesia &amp; Pusat Olimpiade Pelajar</div>
-        <div class="ach-badges"><span class="ach-badge silver">Silver</span><span class="ach-badge teal">National</span></div>
-      </div>
-      <span class="ach-date">12 Apr 2023</span>
-    </div>
-  </div>
-</section>
+  <a href="achievements.html" class="bnav-btn active">Achievement</a>
+  <a href="skills%20%281%29.html" class="bnav-btn">Skills</a>
+  <a href="interests.html" class="bnav-btn">Interests</a>
+</nav>
 
 <footer>
-  <span class="footer-logo">Hugaabrieel</span>
-  <div class="footer-copy">
+  <div class="foot-c">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/><path d="M16 3c0 4-8 4-8 8s8 4 8 8"/></svg>
     &copy; 2025 · Hugaabrieel
   </div>
@@ -212,37 +175,52 @@ document.addEventListener('copy',e=>{e.preventDefault();return false});
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
+
+window.addEventListener('load',()=>{
+  const l=document.getElementById('loader');
+  setTimeout(()=>{l.classList.add('out');triggerReveals();},350);
+});
+
 function switchAch(id,btn){
   document.querySelectorAll('.ach-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ach-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('ach-'+id).classList.add('active');
   btn.classList.add('active');
-  setTimeout(triggerReveals,100);
+  setTimeout(triggerReveals,60);
 }
+
+function triggerReveals(){
+  document.querySelectorAll('.ach-card').forEach((card, i) => {
+    setTimeout(() => { card.classList.add('visible') }, i * 80);
+  });
+}
+
+const sciSVGs=[
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`
+];
+const colors=['var(--accent1)','var(--accent2)','var(--accent3)','var(--accent4)'];
+const pWrap=document.getElementById('particles');
+for(let i=0;i<20;i++){
+  const el=document.createElement('div');
+  el.className='sci-elem';
+  el.style.color=colors[Math.floor(Math.random()*colors.length)];
+  el.innerHTML=sciSVGs[Math.floor(Math.random()*sciSVGs.length)];
+  el.style.left=Math.random()*100+'%';
+  el.style.animationDelay=(Math.random()*12)+'s';
+  el.style.animationDuration=(12+Math.random()*6)+'s';
+  pWrap.appendChild(el);
+}
+
 function toggleTheme(){
   const html=document.documentElement;
   const isDark=html.getAttribute('data-theme')==='dark';
   const newTheme=isDark?'light':'dark';
   html.setAttribute('data-theme',newTheme);
   localStorage.setItem('theme',newTheme);
-  updateThemeIcons(newTheme);
-}
-function updateThemeIcons(t){
-  const sun=document.getElementById('themeIconSun');
-  const moon=document.getElementById('themeIconMoon');
-  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
-  else{sun.style.display='block';moon.style.display='none'}
 }
 const saved=localStorage.getItem('theme');
-if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
-else{updateThemeIcons('dark');}
-function triggerReveals(){
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
-  },{threshold:0.10});
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
-}
-triggerReveals();
+if(saved){document.documentElement.setAttribute('data-theme',saved);}
 </script>
 </body>
 </html>
