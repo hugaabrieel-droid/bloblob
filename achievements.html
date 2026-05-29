@@ -8,70 +8,268 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-[data-theme="dark"]{--bg-base:#050a18;--bg2:#060d1e;--glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);--glass-hover:rgba(255,255,255,0.16);--glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);--text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);--nav-bg:rgba(5,10,24,0.70);--footer-bg:rgba(5,10,24,0.80);--orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);--orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);--card-shine:rgba(255,255,255,0.04)}
-[data-theme="light"]{--bg-base:#e8f0fe;--bg2:#dce8fc;--glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);--glass-hover:rgba(255,255,255,0.80);--glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);--text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);--nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);--orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);--orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);--card-shine:rgba(255,255,255,0.55)}
-:root{--accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;--gold:#FFD27F;--silver:#C8D6E5;--blur:blur(20px);--blur2:blur(32px)}
+
+/* ── THEMES ── */
+[data-theme="dark"]{
+  --bg-base:#050a18;--bg2:#060d1e;
+  --glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);
+  --glass-hover:rgba(255,255,255,0.16);
+  --glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);
+  --text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);
+  --nav-bg:rgba(5,10,24,0.72);--footer-bg:rgba(5,10,24,0.80);
+  --orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);
+  --orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);
+  --card-shine:rgba(255,255,255,0.04);
+  --sci-opacity:0.10;
+}
+[data-theme="light"]{
+  --bg-base:#e8f0fe;--bg2:#dce8fc;
+  --glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);
+  --glass-hover:rgba(255,255,255,0.80);
+  --glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);
+  --text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);
+  --nav-bg:rgba(220,232,252,0.85);--footer-bg:rgba(210,225,250,0.85);
+  --orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);
+  --orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);
+  --card-shine:rgba(255,255,255,0.55);
+  --sci-opacity:0.07;
+}
+:root{
+  --accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;
+  --gold:#FFD27F;--silver:#C8D6E5;
+  --blur:blur(20px);--blur2:blur(32px);
+}
+
 html{scroll-behavior:smooth}
-body{font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;user-select:none;-webkit-user-select:none;-moz-user-select:none}
-.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.5s}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.5s}
+body{
+  font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);
+  overflow-x:hidden;min-height:100vh;
+  /* smooth transition includes background for theme switch */
+  transition:background 0.55s ease,color 0.55s ease;
+  user-select:none;-webkit-user-select:none;-moz-user-select:none;
+}
+
+/* ── BACKGROUND ── */
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.55s ease}
+
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;
+  animation:orbDrift 22s ease-in-out infinite alternate;
+  transition:background 0.55s ease,opacity 0.55s ease}
 .orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
 .orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
 .orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
 .orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
-@keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
-.top-bar{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);border-bottom:1px solid var(--glass-border);transition:background 0.5s,border-color 0.5s}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:1.2rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.01em;cursor:pointer;text-decoration:none}
-.theme-btn{width:52px;height:28px;border-radius:999px;cursor:pointer;border:1.5px solid var(--glass-border2);background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);position:relative;overflow:hidden;transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0}
+@keyframes orbDrift{
+  0%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-20px) scale(1.06)}
+  66%{transform:translate(-15px,35px) scale(0.96)}
+  100%{transform:translate(20px,15px) scale(1.04)}
+}
+
+/* ── BIO + CHEM PARTICLES ── */
+#sci-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sci-elem{
+  position:absolute;pointer-events:none;
+  opacity:0;animation:sciFloat linear infinite;
+  color:var(--accent1);
+}
+@keyframes sciFloat{
+  0%  {opacity:0;transform:translateY(0) rotate(0deg) scale(0.85)}
+  8%  {opacity:var(--sci-opacity)}
+  85% {opacity:calc(var(--sci-opacity)*0.5)}
+  100%{opacity:0;transform:translateY(-110vh) rotate(var(--rot,360deg)) scale(1.1)}
+}
+/* hex molecule rings – CSS only */
+.hex-ring{
+  position:absolute;border-radius:50%;border:1.5px solid;
+  animation:hexSpin linear infinite;
+  opacity:0.07;transition:border-color 0.55s;
+}
+@keyframes hexSpin{from{transform:rotate(0deg) scale(1)}to{transform:rotate(360deg) scale(1.04)}}
+/* DNA helix */
+.dna-strand{
+  position:absolute;pointer-events:none;
+  animation:dnaFloat 18s ease-in-out infinite alternate;
+  opacity:0.09;
+}
+@keyframes dnaFloat{0%{transform:translateY(0) scaleX(1)}50%{transform:translateY(-30px) scaleX(-1)}100%{transform:translateY(10px) scaleX(1)}}
+/* Benzene ring + molecular dot pulses */
+.mol-node{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  animation:molPulse 3s ease-in-out infinite;
+  opacity:0.12;
+}
+@keyframes molPulse{0%,100%{transform:scale(1);opacity:0.12}50%{transform:scale(1.8);opacity:0.22}}
+
+/* ── NAV ── */
+.top-bar{
+  position:fixed;top:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 2.5rem;
+  background:var(--nav-bg);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border-bottom:1px solid var(--glass-border);
+  transition:background 0.55s ease,border-color 0.55s ease;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;font-size:1.2rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.01em;cursor:pointer;text-decoration:none;
+}
+.theme-btn{
+  width:52px;height:28px;border-radius:999px;cursor:pointer;
+  border:1.5px solid var(--glass-border2);background:var(--glass2);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  position:relative;overflow:hidden;
+  transition:background 0.35s,border-color 0.35s,box-shadow 0.35s;flex-shrink:0;
+}
 .theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
-.theme-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.theme-thumb{
+  position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
 [data-theme="dark"] .theme-thumb{transform:translateX(24px)}
 [data-theme="light"] .theme-thumb{transform:translateX(0px)}
-.bottom-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);border:1.5px solid var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);transition:background 0.4s,border-color 0.4s}
-.bnav-btn{padding:0.52rem 1.15rem;border-radius:999px;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;text-decoration:none;display:inline-block}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);
+  border:1.5px solid var(--glass-border2);
+  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
+  transition:background 0.4s,border-color 0.4s;
+}
+.bnav-btn{
+  padding:0.52rem 1.15rem;border-radius:999px;
+  font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
+  cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);
+  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;
+  text-decoration:none;display:inline-block;
+}
 .bnav-btn:hover{color:var(--text);transform:scale(1.06)}
-.bnav-btn.active{background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15)}
-.bnav-btn.active::before{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:18px;height:2.5px;border-radius:2px;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
-section{padding:7rem 3rem 5rem;max-width:1100px;margin:0 auto;position:relative;z-index:1;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both}
+.bnav-btn.active{
+  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
+  color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.bnav-btn.active::before{
+  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:18px;height:2.5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+}
+
+/* ── SECTION ── */
+section{
+  padding:7rem 3rem 5rem;max-width:1100px;margin:0 auto;
+  position:relative;z-index:1;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both;
+}
 @keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.4rem}
 .section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);color:var(--text);line-height:1.15;margin-bottom:0.8rem}
 .divider{width:40px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));margin-bottom:2.5rem}
+
+/* ── TABS ── */
 .ach-tabs{display:flex;gap:0.65rem;margin-bottom:2rem;flex-wrap:wrap}
-.ach-tab{padding:0.5rem 1.3rem;border-radius:999px;font-size:0.82rem;font-weight:600;cursor:pointer;border:1.5px solid var(--glass-border);background:var(--glass);color:var(--muted);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1)}
+.ach-tab{
+  padding:0.5rem 1.3rem;border-radius:999px;font-size:0.82rem;font-weight:600;
+  cursor:pointer;border:1.5px solid var(--glass-border);background:var(--glass);color:var(--muted);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
 .ach-tab:hover{transform:scale(1.04);background:var(--glass2);color:var(--text)}
-.ach-tab.active{background:rgba(110,231,183,0.14);border-color:rgba(110,231,183,0.40);color:var(--accent1);box-shadow:0 0 16px rgba(110,231,183,0.20);transform:scale(1.03)}
+.ach-tab.active{
+  background:rgba(110,231,183,0.14);border-color:rgba(110,231,183,0.40);
+  color:var(--accent1);box-shadow:0 0 16px rgba(110,231,183,0.20);transform:scale(1.03);
+}
 .ach-panel{display:none;flex-direction:column;gap:1rem}
 .ach-panel.active{display:flex}
-.ach-item{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:1.25rem;padding:1.3rem 1.5rem;border-radius:18px;background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border2);box-shadow:0 2px 16px rgba(0,0,0,0.08),inset 0 1px 0 var(--card-shine);transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s,border-color 0.22s}
-.ach-item:hover{transform:translateX(6px);box-shadow:0 6px 28px rgba(0,0,0,0.16);border-color:rgba(110,231,183,0.30)}
-.ach-medal{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.3s}
+
+/* ── ACHIEVEMENT ITEM ── */
+.ach-item{
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:start;gap:1.25rem;
+  padding:1.3rem 1.5rem;border-radius:18px;
+  background:var(--glass2);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 2px 16px rgba(0,0,0,0.08),inset 0 1px 0 var(--card-shine);
+  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s,border-color 0.22s;
+}
+.ach-item:hover{
+  transform:translateX(6px);
+  box-shadow:0 6px 28px rgba(0,0,0,0.16);
+  border-color:rgba(110,231,183,0.30);
+}
+.ach-medal{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:transform 0.3s;
+}
 .ach-medal svg{width:22px;height:22px}
 .ach-item:hover .ach-medal{transform:scale(1.15) rotate(8deg)}
 .ach-medal.gold{background:rgba(255,210,127,0.16);border:1.5px solid rgba(255,210,127,0.35)}
 .ach-medal.silver{background:rgba(200,214,229,0.14);border:1.5px solid rgba(200,214,229,0.30)}
 .ach-medal.blue{background:rgba(110,231,183,0.10);border:1.5px solid rgba(110,231,183,0.26)}
 .ach-medal.purple{background:rgba(167,139,250,0.12);border:1.5px solid rgba(167,139,250,0.28)}
+.ach-medal.pink{background:rgba(249,168,212,0.12);border:1.5px solid rgba(249,168,212,0.28)}
+
 .ach-body{min-width:0}
 .ach-title{font-weight:600;font-size:0.91rem;margin-bottom:0.3rem;line-height:1.45;color:var(--text)}
 .ach-org{font-size:0.77rem;color:var(--muted)}
-.ach-date{font-size:0.73rem;color:var(--muted);white-space:nowrap;background:var(--glass);padding:0.25rem 0.75rem;border-radius:999px;flex-shrink:0;height:fit-content;border:1px solid var(--glass-border)}
+.ach-date{
+  font-size:0.73rem;color:var(--muted);white-space:nowrap;
+  background:var(--glass);padding:0.25rem 0.75rem;border-radius:999px;
+  flex-shrink:0;height:fit-content;border:1px solid var(--glass-border);
+}
 .ach-badges{margin-top:0.4rem;display:flex;gap:0.4rem;flex-wrap:wrap}
-.ach-badge{display:inline-block;font-size:0.67rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:6px}
+.ach-badge{
+  display:inline-block;font-size:0.67rem;font-weight:700;letter-spacing:0.07em;
+  text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:6px;
+}
 .ach-badge.gold{background:rgba(255,210,127,0.16);color:var(--gold);border:1px solid rgba(255,210,127,0.25)}
 .ach-badge.silver{background:rgba(200,214,229,0.14);color:var(--silver);border:1px solid rgba(200,214,229,0.22)}
 .ach-badge.teal{background:rgba(110,231,183,0.12);color:var(--accent1);border:1px solid rgba(110,231,183,0.22)}
+
+/* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
 .reveal.visible{opacity:1;transform:none}
-footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);transition:background 0.5s,border-color 0.5s;margin-bottom:100px}
-.footer-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;border-top:1px solid var(--glass-border);
+  padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
+  backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
+  transition:background 0.55s ease,border-color 0.55s ease;margin-bottom:100px;
+}
+.footer-logo{
+  font-family:'DM Serif Display',serif;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
 .footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
-@media(max-width:768px){.top-bar{padding:0.9rem 1.2rem}section{padding:5.5rem 1.3rem 5rem}.ach-item{grid-template-columns:auto 1fr;}.ach-date{grid-column:2;margin-top:0.3rem}footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}.bottom-nav{bottom:14px;padding:0.35rem 0.4rem}.bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}}
+
+@media(max-width:768px){
+  .top-bar{padding:0.9rem 1.2rem}
+  section{padding:5.5rem 1.3rem 5rem}
+  .ach-item{grid-template-columns:auto 1fr}
+  .ach-date{grid-column:2;margin-top:0.3rem}
+  footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}
+  .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
+  .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
+}
 </style>
 </head>
 <body>
 <div class="bg-static"></div>
 <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
+
+<!-- BIO + CHEM BACKGROUND -->
+<div id="sci-canvas"></div>
 
 <div class="top-bar">
   <a href="index.html" class="nav-logo">Hugaabrieel</a>
@@ -102,11 +300,21 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
     <button class="ach-tab" onclick="switchAch('jhs',this)">Junior High School</button>
   </div>
 
-  <!-- SHS -->
+  <!-- ── SHS ── -->
   <div id="ach-shs" class="ach-panel active">
+
+    <!-- Gold + Best Award -->
     <div class="ach-item reveal">
       <div class="ach-medal gold">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/><polyline points="9 11 12 14 15 11"/></svg>
+        <!-- Trophy cup -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2h12v6a6 6 0 0 1-12 0V2z"/>
+          <path d="M6 7H3a1 1 0 0 0-1 1v1a4 4 0 0 0 4 4"/>
+          <path d="M18 7h3a1 1 0 0 1 1 1v1a4 4 0 0 1-4 4"/>
+          <path d="M12 14v4"/>
+          <path d="M8 22h8"/>
+          <path d="M9 18h6"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Olimpiade Nusantara Sains 2024 — Biology</div>
@@ -115,9 +323,16 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">22–23 Nov 2024</span>
     </div>
+
+    <!-- Silver - OSPP Biology -->
     <div class="ach-item reveal">
       <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
+        <!-- Ribbon star -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="9" r="6"/>
+          <path d="M9 15.5 8 22l4-2 4 2-1-6.5"/>
+          <path d="M9 9l1.5 1.5L12 8l1.5 2.5 2-1"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Olimpiade Sains Prestasi Pelajar — Biology</div>
@@ -126,9 +341,18 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">04 Oct 2025</span>
     </div>
+
+    <!-- Bronze - OPPN Biology -->
     <div class="ach-item reveal">
-      <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
+      <div class="ach-medal blue">
+        <!-- Laurel wreath -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 17c0-5 4-9 8-9s8 4 8 9"/>
+          <path d="M12 8V4"/>
+          <path d="M8 17c0-2.5 1.8-4 4-4s4 1.5 4 4"/>
+          <path d="M2 19c1-2 3-3 5-3"/>
+          <path d="M22 19c-1-2-3-3-5-3"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Olimpiade Pelajar Pandawa Nasional 6.1 (OPPN) — Biology, Advanced Level</div>
@@ -137,9 +361,17 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">24 May 2026</span>
     </div>
+
+    <!-- Bronze - OPPN English -->
     <div class="ach-item reveal">
       <div class="ach-medal blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 17c0-5 4-9 8-9s8 4 8 9"/>
+          <path d="M12 8V4"/>
+          <path d="M8 17c0-2.5 1.8-4 4-4s4 1.5 4 4"/>
+          <path d="M2 19c1-2 3-3 5-3"/>
+          <path d="M22 19c-1-2-3-3-5-3"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Olimpiade Pelajar Pandawa Nasional 6.1 (OPPN) — English, Advanced Level</div>
@@ -148,19 +380,32 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">24 May 2026</span>
     </div>
+
+    <!-- Grand Finalist - OPPN Medical Science -->
     <div class="ach-item reveal">
-      <div class="ach-medal blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      <div class="ach-medal purple">
+        <!-- Sparkle / star badge -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
       </div>
+      <div class="ach-body">
         <div class="ach-title">Olimpiade Pelajar Pandawa Nasional 6.1 (OPPN) — Medical Science, Advanced Level</div>
         <div class="ach-org">CV. Bee Digital Prestasi Nusantara</div>
         <div class="ach-badges"><span class="ach-badge teal">Grand Finalist</span><span class="ach-badge teal">National</span></div>
       </div>
       <span class="ach-date">24 May 2026</span>
     </div>
+
+    <!-- Participant A+ - AMNO English -->
     <div class="ach-item reveal">
       <div class="ach-medal blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <!-- Flag / pennant -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+          <line x1="4" y1="22" x2="4" y2="15"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Academic Nusantara Olympiad 1.0 (AMNO) — English, Intermediate Level</div>
@@ -169,9 +414,15 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">11 Aug 2024</span>
     </div>
+
+    <!-- Essay - AMSAC -->
     <div class="ach-item reveal">
       <div class="ach-medal purple">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <!-- Pencil / write -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">AMSAC Vol. 2 2025 — Essay</div>
@@ -180,24 +431,39 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">10 May 2025</span>
     </div>
-    <div class="ach-body">
+
+    <!-- Volunteer - Pituitary Awareness -->
+    <div class="ach-item reveal">
+      <div class="ach-medal pink">
+        <!-- Heart / volunteer -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div class="ach-body">
         <div class="ach-title">Pituitary Awareness</div>
         <div class="ach-org">Yayasan Komunitas Pituitary Indonesia &amp; Kemenkes RSPON Mahar Mardjono</div>
         <div class="ach-badges"><span class="ach-badge teal">Volunteer</span><span class="ach-badge teal">National</span></div>
       </div>
       <span class="ach-date">29 April 2026</span>
     </div>
-    <div class="ach-item reveal">
-      <div class="ach-medal purple">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      </div>
-  </div>
 
-  <!-- JHS -->
+  </div><!-- /ach-shs -->
+
+  <!-- ── JHS ── -->
   <div id="ach-jhs" class="ach-panel">
+
+    <!-- Gold - Biology -->
     <div class="ach-item reveal">
       <div class="ach-medal gold">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/><polyline points="9 11 12 14 15 11"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2h12v6a6 6 0 0 1-12 0V2z"/>
+          <path d="M6 7H3a1 1 0 0 0-1 1v1a4 4 0 0 0 4 4"/>
+          <path d="M18 7h3a1 1 0 0 1 1 1v1a4 4 0 0 1-4 4"/>
+          <path d="M12 14v4"/>
+          <path d="M8 22h8"/>
+          <path d="M9 18h6"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Indonesian Student Biology Competition — Biology</div>
@@ -206,9 +472,15 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">14 May 2023</span>
     </div>
+
+    <!-- Silver - Language -->
     <div class="ach-item reveal">
       <div class="ach-medal silver">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="9" r="6"/>
+          <path d="M9 15.5 8 22l4-2 4 2-1-6.5"/>
+          <path d="M9 9l1.5 1.5L12 8l1.5 2.5 2-1"/>
+        </svg>
       </div>
       <div class="ach-body">
         <div class="ach-title">Language Olympiad — Indonesian Language</div>
@@ -217,7 +489,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
       </div>
       <span class="ach-date">12 Apr 2023</span>
     </div>
-  </div>
+
+  </div><!-- /ach-jhs -->
 </section>
 
 <footer>
@@ -229,10 +502,29 @@ footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padd
 </footer>
 
 <script>
+/* ── copy protection ── */
 document.addEventListener('copy',e=>{e.preventDefault();return false});
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
+
+/* ── theme ── */
+function toggleTheme(){
+  const html=document.documentElement;
+  const newTheme=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',newTheme);
+  localStorage.setItem('theme',newTheme);
+  updateThemeIcons(newTheme);
+}
+function updateThemeIcons(t){
+  document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';
+  document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
+else{updateThemeIcons('dark');}
+
+/* ── tab switch ── */
 function switchAch(id,btn){
   document.querySelectorAll('.ach-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ach-tab').forEach(t=>t.classList.remove('active'));
@@ -240,30 +532,90 @@ function switchAch(id,btn){
   btn.classList.add('active');
   setTimeout(triggerReveals,100);
 }
-function toggleTheme(){
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  const newTheme=isDark?'light':'dark';
-  html.setAttribute('data-theme',newTheme);
-  localStorage.setItem('theme',newTheme);
-  updateThemeIcons(newTheme);
-}
-function updateThemeIcons(t){
-  const sun=document.getElementById('themeIconSun');
-  const moon=document.getElementById('themeIconMoon');
-  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
-  else{sun.style.display='block';moon.style.display='none'}
-}
-const saved=localStorage.getItem('theme');
-if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
-else{updateThemeIcons('dark');}
+
+/* ── reveal observer ── */
 function triggerReveals(){
   const obs=new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target)}
+    });
   },{threshold:0.10});
   document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
 }
 triggerReveals();
+
+/* ── BIO + CHEM background ── */
+(function buildSciCanvas(){
+  const canvas=document.getElementById('sci-canvas');
+  const colors=['var(--accent1)','var(--accent2)','var(--accent3)','var(--accent4)'];
+
+  // SVG shapes: DNA ellipses, benzene, atom, flask, cell, helix rungs
+  const shapes=[
+    // Atom
+    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" width="32" height="32"><ellipse cx="20" cy="20" rx="18" ry="7"/><ellipse cx="20" cy="20" rx="18" ry="7" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="18" ry="7" transform="rotate(120 20 20)"/><circle cx="20" cy="20" r="2.5" fill="currentColor"/></svg>`,
+    // Benzene-like ring
+    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" width="28" height="28"><polygon points="20,4 34,12 34,28 20,36 6,28 6,12"/><polygon points="20,10 29,15 29,25 20,30 11,25 11,15" stroke-dasharray="3 2"/></svg>`,
+    // DNA single curve
+    `<svg viewBox="0 0 20 50" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="40"><path d="M5,2 Q15,12 5,22 Q-5,32 5,42 Q15,52 5,62"/><line x1="5" y1="12" x2="15" y2="10"/><line x1="5" y1="22" x2="15" y2="24"/><line x1="5" y1="32" x2="15" y2="30"/></svg>`,
+    // Microscope
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M6 18h12M10 18v-3"/><rect x="9" y="2" width="6" height="10" rx="3"/><circle cx="12" cy="7" r="2"/><path d="M7 14h10"/></svg>`,
+    // Erlenmeyer flask
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M10 2h4M9 2v7L4 18a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 18l-5-9V2"/><path d="M6 17h12" stroke-dasharray="2 2"/></svg>`,
+    // Cell membrane
+    `<svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2" width="28" height="28"><ellipse cx="18" cy="18" rx="15" ry="11"/><ellipse cx="18" cy="18" rx="8" ry="5" stroke-dasharray="2 2"/><circle cx="13" cy="16" r="1.5" fill="currentColor" opacity="0.5"/><circle cx="22" cy="20" r="1" fill="currentColor" opacity="0.5"/></svg>`,
+    // H2O molecule
+    `<svg viewBox="0 0 40 28" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="22"><circle cx="20" cy="16" r="5"/><circle cx="6" cy="6" r="3.5"/><circle cx="34" cy="6" r="3.5"/><line x1="20" y1="11" x2="9" y2="8"/><line x1="20" y1="11" x2="31" y2="8"/></svg>`,
+    // Leaf / biology
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M11 20A7 7 0 0 1 4 13c0-3.87 3.13-7 7-7 .5 0 1 .06 1.5.17"/><path d="M20 4c-4 0-8 2-10 6s-2 6 0 10"/><path d="M12 10l4-4"/></svg>`,
+  ];
+
+  // Create floating particles
+  for(let i=0;i<22;i++){
+    const el=document.createElement('div');
+    el.className='sci-elem';
+    el.style.color=colors[i%colors.length];
+    el.innerHTML=shapes[i%shapes.length];
+    el.style.left=(Math.random()*98)+'%';
+    el.style.bottom='-80px';
+    el.style.setProperty('--rot',(Math.random()>0.5?1:-1)*Math.round(180+Math.random()*360)+'deg');
+    el.style.animationDelay=(Math.random()*20)+'s';
+    el.style.animationDuration=(14+Math.random()*12)+'s';
+    el.style.animationTimingFunction='linear';
+    canvas.appendChild(el);
+  }
+
+  // Subtle hex rings at corners
+  const ringDefs=[
+    {size:220,top:'5%',left:'-60px',color:'var(--accent1)',dur:'28s'},
+    {size:160,bottom:'10%',right:'-50px',color:'var(--accent2)',dur:'22s'},
+    {size:100,top:'50%',left:'45%',color:'var(--accent3)',dur:'18s'},
+  ];
+  ringDefs.forEach(r=>{
+    const ring=document.createElement('div');
+    ring.className='hex-ring';
+    ring.style.cssText=`width:${r.size}px;height:${r.size}px;border-color:${r.color};animation-duration:${r.dur};`;
+    if(r.top) ring.style.top=r.top;
+    if(r.bottom) ring.style.bottom=r.bottom;
+    if(r.left) ring.style.left=r.left;
+    if(r.right) ring.style.right=r.right;
+    canvas.appendChild(ring);
+  });
+
+  // Molecular nodes (small glowing dots)
+  const nodeDefs=[
+    {top:'20%',left:'15%',color:'#6EE7B7',delay:'0s'},
+    {top:'65%',left:'80%',color:'#A78BFA',delay:'1.2s'},
+    {top:'40%',left:'55%',color:'#F9A8D4',delay:'2.5s'},
+    {top:'75%',left:'30%',color:'#60A5FA',delay:'0.7s'},
+    {top:'30%',left:'72%',color:'#6EE7B7',delay:'1.8s'},
+  ];
+  nodeDefs.forEach(n=>{
+    const node=document.createElement('div');
+    node.className='mol-node';
+    node.style.cssText=`top:${n.top};left:${n.left};background:${n.color};animation-delay:${n.delay};`;
+    canvas.appendChild(node);
+  });
+})();
 </script>
 </body>
 </html>
