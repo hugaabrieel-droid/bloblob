@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About · Hugaabrieel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+[data-theme="dark"]{--bg-base:#050a18;--bg2:#060d1e;--glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);--glass-hover:rgba(255,255,255,0.16);--glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);--text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);--nav-bg:rgba(5,10,24,0.70);--footer-bg:rgba(5,10,24,0.80);--orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);--orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);--card-shine:rgba(255,255,255,0.04)}
+[data-theme="light"]{--bg-base:#e8f0fe;--bg2:#dce8fc;--glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);--glass-hover:rgba(255,255,255,0.80);--glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);--text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);--nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);--orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);--orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);--card-shine:rgba(255,255,255,0.55)}
+:root{--accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;--gold:#FFD27F;--blur:blur(20px);--blur2:blur(32px)}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;user-select:none;-webkit-user-select:none;-moz-user-select:none}
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.5s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.5s}
+.orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px}
+.orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
+.orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
+.orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
+@keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
+.top-bar{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);border-bottom:1px solid var(--glass-border);transition:background 0.5s,border-color 0.5s}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.2rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.01em;cursor:pointer;text-decoration:none}
+.theme-btn{width:52px;height:28px;border-radius:999px;cursor:pointer;border:1.5px solid var(--glass-border2);background:var(--glass2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);position:relative;overflow:hidden;transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0}
+.theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
+.theme-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+[data-theme="dark"] .theme-thumb{transform:translateX(24px)}
+[data-theme="light"] .theme-thumb{transform:translateX(0px)}
+.bottom-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);border:1.5px solid var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);transition:background 0.4s,border-color 0.4s}
+.bnav-btn{padding:0.52rem 1.15rem;border-radius:999px;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;text-decoration:none;display:inline-block}
+.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
+.bnav-btn.active{background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15)}
+.bnav-btn.active::before{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:18px;height:2.5px;border-radius:2px;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+section{padding:7rem 3rem 5rem;max-width:900px;margin:0 auto;position:relative;z-index:1;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both;display:flex;flex-direction:column;align-items:center}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.4rem;text-align:center}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);color:var(--text);line-height:1.15;margin-bottom:0.8rem;text-align:center}
+.divider{width:40px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));margin:0 auto 2.5rem}
+
+/* about card */
+.about-card{
+  max-width:680px;width:100%;padding:2.5rem;border-radius:28px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.15);
+  margin-bottom:1.5rem;animation:fadein 0.8s 0.1s ease both;
+  position:relative;overflow:hidden;
+}
+.about-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);pointer-events:none}
+.about-card p{color:var(--muted);line-height:1.85;font-size:0.95rem;margin-bottom:1.1rem}
+.about-card p:last-child{margin-bottom:0}
+.about-card p strong{color:var(--text);font-weight:600}
+.card-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.2rem}
+.card-label span{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)}
+
+/* stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1.5rem}
+.stat-card{padding:1rem;border-radius:16px;text-align:center;background:var(--glass);border:1px solid var(--glass-border);transition:transform 0.2s,box-shadow 0.2s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1}
+.stat-num.teal{color:var(--accent1)}.stat-num.purple{color:var(--accent2)}.stat-num.pink{color:var(--accent3)}
+.stat-label{font-size:0.7rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase}
+
+/* contact/connect card */
+.connect-card{
+  max-width:680px;width:100%;padding:2.2rem 2rem;border-radius:28px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 var(--card-shine);
+  animation:fadein 0.8s 0.2s ease both;
+}
+.connect-card p{color:var(--muted);margin-bottom:1.6rem;line-height:1.7;font-size:0.92rem}
+.social-links{display:flex;justify-content:center;gap:0.9rem;flex-wrap:wrap}
+.social-btn{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.65rem 1.35rem;border-radius:14px;font-size:0.84rem;
+  font-weight:600;text-decoration:none;
+  background:var(--glass);border:1.5px solid var(--glass-border2);color:var(--text);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),background 0.22s,box-shadow 0.22s;
+  user-select:none;
+}
+.social-btn:hover{transform:translateY(-4px) scale(1.05);background:var(--glass2);box-shadow:0 6px 20px rgba(0,0,0,0.18)}
+.social-btn:active{transform:scale(0.97)}
+.social-btn svg{width:18px;height:18px;flex-shrink:0}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:none}
+footer{position:relative;z-index:1;border-top:1px solid var(--glass-border);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);transition:background 0.5s,border-color 0.5s;margin-bottom:100px}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
+@media(max-width:768px){.top-bar{padding:0.9rem 1.2rem}section{padding:5.5rem 1.3rem 5rem}.stats-row{grid-template-columns:repeat(3,1fr)}footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}.bottom-nav{bottom:14px;padding:0.35rem 0.4rem}.bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}}
+</style>
+</head>
+<body>
+<div class="bg-static"></div>
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
+
+<div class="top-bar">
+  <a href="index.html" class="nav-logo">Hugaabrieel</a>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode">
+    <div class="theme-thumb">
+      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+  </button>
+</div>
+
+<div class="bottom-nav">
+  <a href="index.html" class="bnav-btn">Home</a>
+  <a href="skills.html" class="bnav-btn">Skills</a>
+  <a href="achievements.html" class="bnav-btn">Awards</a>
+  <a href="interests.html" class="bnav-btn">Interests</a>
+  <a href="about.html" class="bnav-btn active">About</a>
+</div>
+
+<section>
+  <div class="reveal" style="text-align:center;width:100%">
+    <p class="section-label">The Person Behind the Screen</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="about-card reveal">
+    <div class="card-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>Who I Am</span>
+    </div>
+    <p>Hi there! I'm <strong>Lambok Gabriel Huga Nababan</strong>, the creator behind this website. My close friends and family usually call me <strong>Lambok</strong>, though some prefer to go with my middle names, <strong>Gabriel</strong> or <strong>Huga</strong>. Currently, I'm a student at <strong>SMAN 8 Jakarta</strong>.</p>
+    <p>Fun fact: I was born in May, which makes my Chinese zodiac the <strong>Pig</strong> — and yes, I'm very much a Taurus. I'm also a proud sleepy bookworm who somehow still manages to show up to olympiads.</p>
+    <p>My passion lies at the intersection of <strong>Biology</strong>, <strong>Chemistry</strong>, and <strong>Language</strong>. I believe science and storytelling are not opposites — they're two sides of the same curiosity.</p>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num teal">9+</div>
+        <div class="stat-label">Achievements</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num purple">6</div>
+        <div class="stat-label">Medals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num pink">&#9801;</div>
+        <div class="stat-label">Taurus Person</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connect-card reveal">
+    <div class="card-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Let's Connect</span>
+    </div>
+    <p>Looking to chat, team up on a project, or just say hi? You can find me on the platforms below!</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/hugaabrieel/" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://www.threads.com/@hugaabrieel" target="_blank" class="social-btn">
+        <!-- Official Threads logo SVG path -->
+        <svg viewBox="0 0 192 192" fill="currentColor" width="18" height="18">
+          <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0135 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0805 0H96.9198C68.8450 0.19447 47.0466 9.6418 32.3813 28.0793C19.2224 44.4864 12.4066 67.3157 12.1893 95.9325L12.1893 96L12.1893 96.0675C12.4066 124.684 19.2224 147.514 32.3813 163.921C47.0466 182.358 68.8450 191.806 96.9198 192H97.0805C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+        </svg>
+        Threads
+      </a>
+      <a href="https://x.com/hugaabrieel" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X (Twitter)
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Hugaabrieel</span>
+  <div class="footer-copy">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/><path d="M16 3c0 4-8 4-8 8s8 4 8 8"/></svg>
+    &copy; 2025 · Hugaabrieel
+  </div>
+</footer>
+
+<script>
+document.addEventListener('copy',e=>{e.preventDefault();return false});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('dragstart',e=>e.preventDefault());
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  const newTheme=isDark?'light':'dark';
+  html.setAttribute('data-theme',newTheme);
+  localStorage.setItem('theme',newTheme);
+  updateThemeIcons(newTheme);
+}
+function updateThemeIcons(t){
+  const sun=document.getElementById('themeIconSun');
+  const moon=document.getElementById('themeIconMoon');
+  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
+  else{sun.style.display='block';moon.style.display='none'}
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
+else{updateThemeIcons('dark');}
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
+},{threshold:0.10});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
