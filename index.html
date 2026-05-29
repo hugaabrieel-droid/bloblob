@@ -9,11 +9,6 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-/* Poin 8 & 9: Mengoptimalkan transisi global dan palet Light Mode agar lebih nge-blend */
-*, *::before, *::after {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
-}
-
 [data-theme="dark"]{
   --bg-base:#050a18;--bg2:#060d1e;
   --glass:rgba(255,255,255,0.08);--glass2:rgba(255,255,255,0.13);
@@ -26,15 +21,15 @@
   --card-shine:rgba(255,255,255,0.04);
 }
 [data-theme="light"]{
-  --bg-base:#f3f6fc;--bg2:#e4ecfa;
-  --glass:rgba(13,27,62,0.05);--glass2:rgba(13,27,62,0.09);
-  --glass-hover:rgba(13,27,62,0.14);
-  --glass-border:rgba(13,27,62,0.12);--glass-border2:rgba(13,27,62,0.22);
-  --text:#0d1b3e;--muted:rgba(13,27,62,0.65);--muted2:rgba(13,27,62,0.40);
-  --nav-bg:rgba(228,236,250,0.85);--footer-bg:rgba(228,236,250,0.90);
-  --orb1:rgba(52,211,153,0.15);--orb2:rgba(139,92,246,0.12);
-  --orb3:rgba(244,114,182,0.10);--orb4:rgba(59,130,246,0.12);
-  --card-shine:rgba(255,255,255,0.40);
+  --bg-base:#e8f0fe;--bg2:#dce8fc;
+  --glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);
+  --glass-hover:rgba(255,255,255,0.80);
+  --glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);
+  --text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);
+  --nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);
+  --orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);
+  --orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);
+  --card-shine:rgba(255,255,255,0.55);
 }
 :root{
   --accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;
@@ -43,208 +38,427 @@
 }
 
 html{scroll-behavior:smooth}
-/* Poin 7: Menerapkan flexbox di body untuk mencegah gap buruk pada footer */
 body{
   font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);
-  overflow-x:hidden;min-height:100vh;
-  display:flex;flex-direction:column;
+  overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;
   user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;
 }
 
-/* Poin 3: Animasi Loading Situs Awal Segar */
+/* ── LOADER ── */
 #loader{
   position:fixed;inset:0;z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;
-  background:var(--bg-base);transition:opacity 0.5s ease, transform 0.5s ease;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  background:var(--bg-base);transition:opacity 0.6s ease,transform 0.6s ease;
 }
-#loader.out{opacity:0;transform:scale(1.02);pointer-events:none}
-.loader-content{text-align:center}
-.loader-text{
-  font-family:'DM Serif Display',serif;font-style:italic;font-size:2.2rem;
-  color:var(--text);letter-spacing:2px;display:block;margin-bottom:12px;
-}
-.loader-bar{width:140px;height:3px;background:var(--glass2);border-radius:3px;overflow:hidden;margin:0 auto}
-.loader-progress{width:0;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));animation:loadRun 1s forwards cubic-bezier(0.1, 0.8, 0.3, 1)}
-@keyframes loadRun{to{width:100%}}
+#loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.loader-svg{width:180px;height:180px}
+.loader-text{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:0.5}50%{opacity:1}}
 
-.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;}
+/* ── BG ── */
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.5s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.5s}
 .orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
 .orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
 .orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
 .orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
 @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
 
+/* ── SCIENCE PARTICLES ── */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-/* Poin 6: Meningkatkan opacity elemen sains biokimia agar lebih terlihat hidup */
-.sci-elem{position:absolute;opacity:0;animation:floatUp 14s ease-in-out infinite;filter:blur(0.2px)}
-@keyframes floatUp{
-  0%{opacity:0;transform:translateY(100vh) rotate(0deg) scale(0.85)}
-  15%{opacity:0.38}
-  85%{opacity:0.38}
-  100%{opacity:0;transform:translateY(-10vh) rotate(360deg) scale(1.15)}
-}
+.sci-elem{position:absolute;opacity:0;animation:floatUp 12s ease-in-out infinite;filter:blur(0.3px)}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.8)}10%{opacity:0.15}80%{opacity:0.08}100%{opacity:0;transform:translateY(-90vh) rotate(360deg) scale(1.1)}}
 
+/* ── THEME TOGGLE ── */
 .theme-btn{
   width:52px;height:28px;border-radius:999px;cursor:pointer;
   border:1.5px solid var(--glass-border2);background:var(--glass2);
   backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  position:relative;overflow:hidden;flex-shrink:0;
+  position:relative;overflow:hidden;
+  transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0;
 }
 .theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
 .theme-thumb{
   position:absolute;top:3px;left:3px;
   width:20px;height:20px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.2);
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
 }
+/* dark = right, light = left */
 [data-theme="dark"] .theme-thumb{transform:translateX(24px)}
 [data-theme="light"] .theme-thumb{transform:translateX(0px)}
 
+/* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
   z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;
-  background:var(--nav-bg);backdrop-filter:var(--blur2) saturate(2);
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);
   -webkit-backdrop-filter:var(--blur2) saturate(2);
   border:1.5px solid var(--glass-border2);
-  box-shadow:0 8px 40px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
+  transition:background 0.4s,border-color 0.4s;
 }
-/* Poin 4: Menghapus underline pada menu bar navigasi secara menyeluruh */
 .bnav-btn{
   padding:0.52rem 1.15rem;border-radius:999px;
   font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
   cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);
-  text-decoration:none !important;
-  display:inline-block;
+  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;
 }
-.bnav-btn:hover{color:var(--text);transform:scale(1.04)}
-/* Perbaikan status warna tombol aktif di tema terang agar tetap blend */
+.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
 .bnav-btn.active{
-  background:var(--glass-hover);
-  color:var(--text);
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
+  color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.bnav-btn.active::before{
+  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:18px;height:2.5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
 }
 
-.top-right{position:fixed;top:28px;right:28px;z-index:160}
-main{flex:1;display:flex;align-items:center;justify-content:center;position:relative;z-index:10;padding:4rem 2rem}
-
-/* Poin 2: Memperbaiki kontainer agar nama besar tidak pernah kepotong h1-nya */
-.hero-box{text-align:center;max-width:800px;padding:20px 0;overflow:visible}
-.hero-title-container {
-  overflow:visible;
-  padding:12px 0;
-  margin-bottom:0.5rem;
+/* ── NAV LOGO AREA (no full nav, just logo + theme) ── */
+.top-bar{
+  position:fixed;top:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 2.5rem;
+  background:var(--nav-bg);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border-bottom:1px solid var(--glass-border);
+  transition:background 0.5s,border-color 0.5s;
 }
-.hero-box h1{
+.nav-logo{
+  font-family:'DM Serif Display',serif;font-size:1.2rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.01em;cursor:pointer;text-decoration:none;
+}
+
+/* ── HERO ── */
+#hero-page{
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  gap:1.6rem;text-align:center;padding:9rem 2rem 6rem;min-height:100vh;
+  position:relative;z-index:1;animation:pageIn 0.6s ease both;
+}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(110,231,183,0.10);border:1px solid rgba(110,231,183,0.28);
+  color:var(--accent1);font-size:0.78rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.4rem 1.1rem;border-radius:999px;animation:fadein 0.7s ease both;
+}
+.hero-name{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(2.8rem, 7.5vw, 5.2rem);
-  line-height:1.2;
-  font-weight:400;
+  font-size:clamp(3rem,6.5vw,5.5rem);line-height:1.08;
+  background:linear-gradient(135deg,var(--text) 20%,var(--accent1) 55%,var(--accent2) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadein 0.8s 0.1s ease both;
 }
-/* Poin 2: Mengganti bentuk emoji taurus menjadi format simbol teks murni minimalis */
-.taurus-txt {
-  font-family:sans-serif;
-  font-size:0.75em;
-  font-weight:300;
-  margin-left:12px;
-  vertical-align:middle;
-  display:inline-block;
+[data-theme="light"] .hero-name{
+  background:linear-gradient(135deg,#0d1b3e 20%,#059669 55%,#7c3aed 80%);
+  -webkit-background-clip:text;background-clip:text;
 }
-.hero-box p{font-size:1.05rem;color:var(--muted);letter-spacing:0.02em;font-weight:300;margin-top:0.5rem}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.75;animation:fadein 0.9s 0.2s ease both}
+.hero-pills{display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;animation:fadein 1s 0.3s ease both}
+.pill{
+  padding:0.38rem 0.95rem;border-radius:999px;font-size:0.8rem;font-weight:500;
+  background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
+  transition:transform 0.2s,background 0.2s,box-shadow 0.2s;cursor:default;
+  display:inline-flex;align-items:center;gap:0.35rem;
+}
+.pill:hover{transform:translateY(-2px) scale(1.04);background:var(--glass2);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.pill.teal{background:rgba(110,231,183,0.10);border-color:rgba(110,231,183,0.28);color:var(--accent1)}
+.pill.purple{background:rgba(167,139,250,0.10);border-color:rgba(167,139,250,0.28);color:var(--accent2)}
+.pill.pink{background:rgba(249,168,212,0.10);border-color:rgba(249,168,212,0.28);color:var(--accent3)}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadein 1s 0.4s ease both}
 
-footer{
-  width:100%;padding:2rem 3rem;background:transparent;
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.72rem;color:var(--muted2);letter-spacing:0.05em;
-  position:relative;z-index:10;margin-top:auto;
+/* ── ABOUT GLASS CARD ── */
+.about-glass{
+  max-width:760px;width:100%;margin:1rem auto 0;padding:2.5rem;
+  border-radius:28px;background:var(--glass2);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.15);
+  text-align:left;animation:fadein 1s 0.5s ease both;position:relative;overflow:hidden;
 }
-.foot-c{display:flex;align-items:center;gap:0.4rem}
+.about-glass::before{
+  content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);pointer-events:none;
+}
+.about-glass p{color:var(--muted);line-height:1.8;font-size:0.95rem}
+.about-glass p strong{color:var(--text);font-weight:600}
+.about-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.1rem}
+.about-label span{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1.5rem}
+.stat-card{
+  padding:1rem;border-radius:16px;text-align:center;
+  background:var(--glass);border:1px solid var(--glass-border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1}
+.stat-num.teal{color:var(--accent1)}.stat-num.purple{color:var(--accent2)}.stat-num.pink{color:var(--accent3)}
+.stat-label{font-size:0.7rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase}
+
+/* ── BTNS ── */
+.btn{
+  padding:0.75rem 2rem;border-radius:999px;font-size:0.88rem;
+  font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;
+  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s;
+  position:relative;overflow:hidden;border:none;
+}
+.btn:hover{transform:translateY(-3px) scale(1.03)}
+.btn:active{transform:scale(0.97)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#04081a;
+  box-shadow:0 0 20px rgba(110,231,183,0.28);
+}
+.btn-primary:hover{box-shadow:0 0 36px rgba(110,231,183,0.50)}
+.btn-ghost{
+  background:var(--glass2);border:1px solid var(--glass-border2);color:var(--text);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.40);background:var(--glass-hover)}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;border-top:1px solid var(--glass-border);
+  padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
+  backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
+  transition:background 0.5s,border-color 0.5s;margin-bottom:100px;
+}
+.footer-logo{
+  font-family:'DM Serif Display',serif;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── LIGHT MODE ── */
+[data-theme="light"] .skill-bar-wrap{background:rgba(0,0,0,0.07)}
+[data-theme="light"] .orb1{opacity:0.7}[data-theme="light"] .orb2{opacity:0.7}
+
+@media(max-width:768px){
+  .top-bar{padding:0.9rem 1.2rem}
+  #hero-page{padding:6rem 1.3rem 8rem}
+  .about-glass{padding:1.5rem}
+  .about-stats{grid-template-columns:repeat(3,1fr)}
+  footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}
+  .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
+  .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
+}
 </style>
 </head>
 <body>
 
+<!-- LOADER -->
 <div id="loader">
-  <div class="loader-content">
-    <span class="loader-text">TESIS 36</span>
-    <div class="loader-bar"><div class="loader-progress"></div></div>
-  </div>
+  <svg class="loader-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="dnaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#A78BFA"/>
+      </linearGradient>
+      <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#F9A8D4"/>
+      </linearGradient>
+    </defs>
+    <path d="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165" fill="none" stroke="url(#dnaGrad)" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165;M70,20 Q30,45 70,70 Q110,95 70,120 Q30,145 70,165;M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165"/>
+    </path>
+    <path d="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165" fill="none" stroke="url(#dnaGrad2)" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165;M110,20 Q150,45 110,70 Q70,95 110,120 Q150,145 110,165;M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165"/>
+    </path>
+    <g stroke="#6EE7B7" stroke-width="1.5" opacity="0.55">
+      <line x1="70" y1="45" x2="110" y2="45"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
+      <line x1="70" y1="70" x2="110" y2="70"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
+      <line x1="70" y1="95" x2="110" y2="95"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
+      <line x1="70" y1="120" x2="110" y2="120"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
+      <line x1="70" y1="145" x2="110" y2="145"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
+    </g>
+    <circle cx="90" cy="90" r="22" fill="none" stroke="rgba(167,139,250,0.35)" stroke-width="1" stroke-dasharray="4 3">
+      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="112" cy="90" r="5" fill="#A78BFA" opacity="0.8">
+      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90" cy="90" r="7" fill="url(#dnaGrad)" opacity="0.9">
+      <animate attributeName="r" values="7;9;7" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+  <div class="loader-text">Hold on, loading something cool ✦</div>
 </div>
 
 <div class="bg-static"></div>
-<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
+<div class="orb orb1"></div><div class="orb orb2"></div>
+<div class="orb orb3"></div><div class="orb orb4"></div>
 <div id="particles"></div>
 
-<div class="top-right">
-  <div class="theme-btn" onclick="toggleTheme()">
-    <div class="theme-thumb"></div>
+<!-- TOP BAR (logo + theme only) -->
+<div class="top-bar">
+  <a href="index.html" class="nav-logo">Hugaabrieel</a>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode">
+    <div class="theme-thumb" id="themeThumb">
+      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </div>
+  </button>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="index.html" class="bnav-btn active">Home</a>
+  <a href="skills.html" class="bnav-btn">Skills</a>
+  <a href="achievements.html" class="bnav-btn">Awards</a>
+  <a href="interests.html" class="bnav-btn">Interests</a>
+  <a href="about.html" class="bnav-btn">About</a>
+</div>
+
+<!-- HERO -->
+<div id="hero-page">
+  <span class="hero-tag">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+    Student · Scientist · Writer
+  </span>
+  <h1 class="hero-name">Lambok Gabriel<br>Huga Nababan</h1>
+  <p class="hero-sub">A student at SMAN 8 Jakarta, passionate about Biology, Chemistry, and the English Language. Born in May · Taurus person</p>
+  <div class="hero-pills">
+    <span class="pill teal">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      Biology Enthusiast
+    </span>
+    <span class="pill purple">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      Chemistry Lover
+    </span>
+    <span class="pill pink">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Writer
+    </span>
+    <span class="pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      K-Pop Fan
+    </span>
+    <span class="pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Cat Person
+    </span>
+  </div>
+  <div class="hero-cta">
+    <a href="achievements.html" class="btn btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+      See Achievements
+    </a>
+    <a href="about.html" class="btn btn-ghost">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      About Me
+    </a>
+  </div>
+
+  <!-- Quick about card -->
+  <div class="about-glass">
+    <div class="about-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>Quick Introduction</span>
+    </div>
+    <p>Hi there! I'm <strong>Lambok Gabriel Huga Nababan</strong>, the creator behind this website. My close friends and family usually call me <strong>Lambok</strong>, though some prefer to go with my middle names, <strong>Gabriel</strong> or <strong>Huga</strong>. Currently, I'm a student at <strong>SMAN 8 Jakarta</strong>. Fun fact: I was born in May, which makes my Chinese zodiac the <strong>Pig</strong>. I'm also a sleepy bookworm person too.</p>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num teal">9+</div>
+        <div class="stat-label">Achievements</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num purple">6</div>
+        <div class="stat-label">Medals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num pink">&#9801;</div>
+        <div class="stat-label">Taurus Person</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<main>
-  <div class="hero-box">
-    <div class="hero-title-container">
-      <h1>Lambok Gabriel<span class="taurus-txt">&#9804;</span></h1>
-    </div>
-    <p>explore sections below to know more about me</p>
-  </div>
-</main>
-
-<nav class="bottom-nav">
-  <a href="index.html" class="bnav-btn active">Index</a>
-  <a href="about.html" class="bnav-btn">About</a>
-  <a href="achievements.html" class="bnav-btn">Achievement</a>
-  <a href="skills%20%281%29.html" class="bnav-btn">Skills</a>
-  <a href="interests.html" class="bnav-btn">Interests</a>
-</nav>
-
+<!-- FOOTER -->
 <footer>
-  <div class="foot-c">
+  <span class="footer-logo">Hugaabrieel</span>
+  <div class="footer-copy">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/><path d="M16 3c0 4-8 4-8 8s8 4 8 8"/></svg>
     &copy; 2025 · Hugaabrieel
   </div>
 </footer>
 
 <script>
+/* block copy */
 document.addEventListener('copy',e=>{e.preventDefault();return false});
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 
+/* loader */
 window.addEventListener('load',()=>{
-  const l=document.getElementById('loader');
-  setTimeout(()=>{l.classList.add('out')},350);
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('out');
+    setTimeout(()=>document.getElementById('loader').style.display='none',650);
+  },2200);
 });
 
-/* Poin 6: Kumpulan SVG Unsur Campuran Kimia & Struktur Biologi Hidup */
+/* particles - SVG-based science symbols */
 const sciSVGs=[
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>`,
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 16.5c-1.5-1.5-2.5-3.5-2.5-5.5C2 6.5 6.5 2 12 2s10 4.5 10 9c0 2-1 4-2.5 5.5M12 6v12M9 9h6M8 14h8"/></svg>`,
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>`
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/><path d="M2 12h10"/><circle cx="18" cy="18" r="4"/><path d="m20 16-4 4 2-2"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0zM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0z"/><path d="M1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122z"/></svg>`,
 ];
 const colors=['var(--accent1)','var(--accent2)','var(--accent3)','var(--accent4)'];
 const pWrap=document.getElementById('particles');
-for(let i=0;i<20;i++){
+for(let i=0;i<16;i++){
   const el=document.createElement('div');
   el.className='sci-elem';
   el.style.color=colors[Math.floor(Math.random()*colors.length)];
+  el.style.opacity='0.18';
   el.innerHTML=sciSVGs[Math.floor(Math.random()*sciSVGs.length)];
   el.style.left=Math.random()*100+'%';
-  el.style.animationDelay=(Math.random()*12)+'s';
-  el.style.animationDuration=(12+Math.random()*6)+'s';
+  el.style.animationDelay=(Math.random()*14)+'s';
+  el.style.animationDuration=(10+Math.random()*8)+'s';
   pWrap.appendChild(el);
 }
 
+/* theme */
 function toggleTheme(){
   const html=document.documentElement;
   const isDark=html.getAttribute('data-theme')==='dark';
   const newTheme=isDark?'light':'dark';
   html.setAttribute('data-theme',newTheme);
   localStorage.setItem('theme',newTheme);
+  updateThemeIcons(newTheme);
 }
+function updateThemeIcons(t){
+  const sun=document.getElementById('themeIconSun');
+  const moon=document.getElementById('themeIconMoon');
+  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
+  else{sun.style.display='block';moon.style.display='none'}
+}
+/* restore saved theme */
 const saved=localStorage.getItem('theme');
-if(saved){document.documentElement.setAttribute('data-theme',saved);}
+if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
+else{updateThemeIcons('dark');}
 </script>
 </body>
 </html>
