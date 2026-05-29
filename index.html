@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lambok Gabriel Huga Nababan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --glass: rgba(255,255,255,0.10);
+    --glass-border: rgba(255,255,255,0.22);
+    --glass-hover: rgba(255,255,255,0.16);
+    --blur: blur(18px);
+    --accent1: #7FD4C2;
+    --accent2: #A78BFA;
+    --accent3: #F9A8D4;
+    --accent4: #6EE7B7;
+    --text: #f0f4ff;
+    --muted: rgba(240,244,255,0.60);
+    --gold: #FFD27F;
+    --silver: #C8D6E5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #050a18;
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── ANIMATED BG ── */
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(127,212,194,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(167,139,250,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 60% 20%, rgba(249,168,212,0.12) 0%, transparent 50%),
+      #060d1e;
+  }
+  .bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.07;
+  }
+
+  /* ── FLOATING ORBS ── */
+  .orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(70px); z-index: 0; pointer-events: none;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .orb1 { width:380px; height:380px; background:rgba(127,212,194,0.14); top:-80px; left:-100px; animation-delay:0s; }
+  .orb2 { width:300px; height:300px; background:rgba(167,139,250,0.16); bottom:5%; right:-80px; animation-delay:3s; }
+  .orb3 { width:220px; height:220px; background:rgba(249,168,212,0.12); top:45%; left:55%; animation-delay:6s; }
+
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(25px, 30px) scale(1.08); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(6,13,30,0.55);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 0.875rem;
+    font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--accent1); }
+
+  /* ── GLASS CARD ── */
+  .glass {
+    background: var(--glass);
+    backdrop-filter: var(--blur) saturate(1.5);
+    -webkit-backdrop-filter: var(--blur) saturate(1.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+  }
+  .glass:hover {
+    background: var(--glass-hover);
+    border-color: rgba(255,255,255,0.30);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* ── LAYOUT ── */
+  main { position: relative; z-index: 1; }
+  section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; flex-direction: column; gap: 1.5rem;
+    padding-top: 7rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(127,212,194,0.12);
+    border: 1px solid rgba(127,212,194,0.30);
+    color: var(--accent1); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 999px;
+    animation: fadein 0.8s ease both;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent1) 65%, var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: fadein 0.9s 0.1s ease both;
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted); max-width: 540px; line-height: 1.7;
+    animation: fadein 1s 0.2s ease both;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+    animation: fadein 1s 0.3s ease both;
+  }
+  .pill {
+    padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text);
+  }
+  .pill.teal { background: rgba(127,212,194,0.12); border-color: rgba(127,212,194,0.30); color: var(--accent1); }
+  .pill.purple { background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.30); color: var(--accent2); }
+  .pill.pink { background: rgba(249,168,212,0.12); border-color: rgba(249,168,212,0.30); color: var(--accent3); }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadein 1s 0.4s ease both;
+  }
+  .btn {
+    padding: 0.75rem 2rem; border-radius: 999px; font-size: 0.9rem;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #05091a; border: none;
+    box-shadow: 0 0 24px rgba(127,212,194,0.30);
+  }
+  .btn-primary:hover { box-shadow: 0 0 32px rgba(127,212,194,0.50); }
+  .btn-ghost {
+    background: var(--glass); border: 1px solid var(--glass-border); color: var(--text);
+    backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+  }
+
+  @keyframes fadein { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: none; } }
+
+  /* ── SECTION HEADING ── */
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent1); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--text); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .divider {
+    width: 40px; height: 3px; border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── ABOUT ── */
+  #about .about-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 2.5rem; align-items: center;
+  }
+  .about-photo-wrap {
+    position: relative;
+  }
+  .about-photo-wrap::before {
+    content: '';
+    position: absolute; inset: -2px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+    z-index: -1;
+    opacity: 0.5;
+  }
+  .about-photo {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    border-radius: 20px; display: block;
+    background: linear-gradient(135deg, rgba(127,212,194,0.15), rgba(167,139,250,0.15));
+  }
+  .photo-placeholder {
+    width: 100%; aspect-ratio: 3/4; border-radius: 20px;
+    background: linear-gradient(135deg, rgba(127,212,194,0.10), rgba(167,139,250,0.12));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.75rem; border: 1px solid var(--glass-border);
+  }
+  .photo-placeholder svg { width:64px; height:64px; opacity:0.4; }
+  .photo-placeholder span { font-size: 0.8rem; color: var(--muted); }
+  .about-content p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.97rem; }
+  .about-content p strong { color: var(--text); font-weight: 600; }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;
+  }
+  .stat-card {
+    padding: 1rem; border-radius: 16px; text-align: center;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; line-height:1; }
+  .stat-num.teal { color: var(--accent1); }
+  .stat-num.purple { color: var(--accent2); }
+  .stat-num.pink { color: var(--accent3); }
+  .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; letter-spacing: 0.05em; }
+
+  /* ── SKILLS ── */
+  #skills .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1.25rem; }
+  .skill-card {
+    padding: 1.5rem; border-radius: 20px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
+    transition: transform 0.25s, background 0.25s;
+  }
+  .skill-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.11); }
+  .skill-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 0.9rem;
+  }
+  .skill-icon.teal { background: rgba(127,212,194,0.15); }
+  .skill-icon.purple { background: rgba(167,139,250,0.15); }
+  .skill-icon.pink { background: rgba(249,168,212,0.15); }
+  .skill-icon.gold { background: rgba(255,210,127,0.15); }
+  .skill-title { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.4rem; }
+  .skill-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .skill-bar-wrap { margin-top: 0.9rem; height: 4px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow:hidden; }
+  .skill-bar { height: 100%; border-radius: 4px; animation: grow 1.2s ease both; }
+  .skill-bar.teal { background: linear-gradient(90deg, var(--accent1), var(--accent4)); }
+  .skill-bar.purple { background: linear-gradient(90deg, var(--accent2), var(--accent3)); }
+  .skill-bar.pink { background: linear-gradient(90deg, var(--accent3), var(--accent2)); }
+  .skill-bar.gold { background: linear-gradient(90deg, var(--gold), #f7b731); }
+  @keyframes grow { from { width: 0; } }
+
+  /* ── ACHIEVEMENTS ── */
+  #achievements .ach-tabs { display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .ach-tab {
+    padding: 0.45rem 1.1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06); color: var(--muted);
+    transition: all 0.2s;
+  }
+  .ach-tab.active { background: rgba(127,212,194,0.15); border-color: rgba(127,212,194,0.40); color: var(--accent1); }
+  .ach-list { display: flex; flex-direction: column; gap: 1rem; }
+  .ach-item {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: start; gap: 1.25rem;
+    padding: 1.25rem 1.5rem; border-radius: 18px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .ach-item:hover { transform: translateX(4px); background: rgba(255,255,255,0.10); }
+  .ach-medal {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .ach-medal.gold { background: rgba(255,210,127,0.18); border: 1px solid rgba(255,210,127,0.35); }
+  .ach-medal.silver { background: rgba(200,214,229,0.15); border: 1px solid rgba(200,214,229,0.30); }
+  .ach-medal.blue { background: rgba(127,212,194,0.12); border: 1px solid rgba(127,212,194,0.28); }
+  .ach-body { min-width: 0; }
+  .ach-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 0.3rem; line-height: 1.4; }
+  .ach-org { font-size: 0.78rem; color: var(--muted); }
+  .ach-date {
+    font-size: 0.75rem; color: var(--muted); white-space: nowrap;
+    background: rgba(255,255,255,0.06); padding: 0.25rem 0.7rem;
+    border-radius: 999px; flex-shrink: 0; height: fit-content;
+  }
+  .ach-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.2rem 0.55rem; border-radius: 5px; margin-top: 0.35rem;
+  }
+  .ach-badge.gold { background: rgba(255,210,127,0.18); color: var(--gold); }
+  .ach-badge.silver { background: rgba(200,214,229,0.15); color: var(--silver); }
+  .ach-badge.blue { background: rgba(127,212,194,0.12); color: var(--accent1); }
+
+  /* ── INTERESTS ── */
+  #interests .int-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.25rem; }
+  .int-card {
+    padding: 1.5rem; border-radius: 20px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
+    transition: transform 0.25s, background 0.25s;
+  }
+  .int-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.11); }
+  .int-emoji { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+  .int-title { font-weight: 600; margin-bottom: 0.4rem; }
+  .int-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── CONTACT ── */
+  #contact {
+    text-align: center;
+    padding-bottom: 3rem;
+  }
+  .contact-card {
+    max-width: 600px; margin: 0 auto;
+    padding: 3rem 2.5rem; border-radius: 28px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  }
+  .contact-card p { color: var(--muted); margin-bottom: 2rem; line-height: 1.7; }
+  .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .social-btn {
+    display: flex; align-items: center; gap: 0.55rem;
+    padding: 0.65rem 1.4rem; border-radius: 14px; font-size: 0.85rem;
+    font-weight: 600; text-decoration: none; transition: transform 0.2s, background 0.2s;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+    color: var(--text);
+  }
+  .social-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,0.14); }
+  .social-btn svg { width:18px; height:18px; flex-shrink:0; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    background: rgba(6,13,30,0.6);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .footer-left { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--accent1); }
+  .footer-center { font-size: 0.78rem; color: var(--muted); text-align: center; }
+  .footer-right { font-size: 0.78rem; color: var(--muted); }
+  .footer-dna { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .footer-dna svg { width:14px; height:14px; opacity:0.6; }
+
+  /* ── HIDDEN TAB CONTENT ── */
+  .ach-panel { display: none; }
+  .ach-panel.active { display: flex; flex-direction: column; gap: 1rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #about .about-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 1.5rem; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">LGH Nababan</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-tag">✦ Student · Scientist · Writer</span>
+  <h1 class="hero-name">Lambok Gabriel<br>Huga Nababan</h1>
+  <p class="hero-sub">Siswa SMAN 8 Jakarta yang passionate di Biologi, Kimia, dan Bahasa Inggris. Lahir 8 Mei 2007.</p>
+  <div class="hero-pills">
+    <span class="pill teal">🧬 Biology Olympiad</span>
+    <span class="pill purple">⚗️ Chemistry Lover</span>
+    <span class="pill pink">✍️ Writer</span>
+    <span class="pill">🎵 K-Pop Fan</span>
+    <span class="pill">🐱 Cat Person</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#achievements" class="btn btn-primary">See Achievements</a>
+    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-photo-wrap glass">
+      <div class="photo-placeholder">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="24" r="12" stroke="white" stroke-width="2"/>
+          <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Lambok Gabriel Huga Nababan</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <p>Halo! Aku <strong>Lambok</strong>, panggilan sehari-hariku. Aku adalah siswa di <strong>SMAN 8 Jakarta</strong>, berusia 18 tahun, lahir 8 Mei 2007.</p>
+      <p>Aku sangat menyukai mata pelajaran <strong>Biologi</strong>, terutama yang berhubungan dengan tubuh manusia dan hewan — sisi anatomi dan fisiologinya paling bikin penasaran. Kimia juga jadi passion-ku yang nggak kalah seru.</p>
+      <p>Selain akademik, aku suka <strong>menulis</strong> — kadang langsung di HP biar simpel. Musik K-Pop juga jadi teman sehari-hari, terutama <strong>Le Sserafim &amp; Ariana Grande</strong>.</p>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num teal">6+</div>
+          <div class="stat-label">Achievements</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num purple">2</div>
+          <div class="stat-label">Gold Medals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num pink">18</div>
+          <div class="stat-label">Years Old</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">What I Do</p>
+    <h2 class="section-title">Skills &amp; Passions</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon teal">🧬</div>
+      <div class="skill-title">Biologi</div>
+      <div class="skill-desc">Spesialisasi di anatomi &amp; fisiologi manusia dan hewan. Sudah memenangkan beberapa olimpiade biologi tingkat nasional.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar teal" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon purple">⚗️</div>
+      <div class="skill-title">Kimia</div>
+      <div class="skill-desc">Passionate di kimia dengan background lomba sains. Kontribusi aktif di olimpiade sains multidisiplin.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar purple" style="width:78%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon pink">🇬🇧</div>
+      <div class="skill-title">Bahasa Inggris</div>
+      <div class="skill-desc">Kemampuan Intermediate yang diakui secara nasional. Peserta olimpiade bahasa Inggris tingkat nasional.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar pink" style="width:82%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon gold">✍️</div>
+      <div class="skill-title">Menulis</div>
+      <div class="skill-desc">Hobi menulis — dari catatan harian sampai esai. Peserta lomba esai tingkat nasional oleh UGM &amp; Kemenkes.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar gold" style="width:72%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="reveal">
+    <p class="section-label">Track Record</p>
+    <h2 class="section-title">Achievements</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="ach-tabs reveal">
+    <button class="ach-tab active" onclick="switchTab('sma')">SMA Era</button>
+    <button class="ach-tab" onclick="switchTab('smp')">SMP Era</button>
+  </div>
+
+  <div id="tab-sma" class="ach-panel active reveal">
+    <div class="ach-item">
+      <div class="ach-medal gold">🥇</div>
+      <div class="ach-body">
+        <div class="ach-title">Olimpiade Nusantara Sains 2024 — Biologi</div>
+        <div class="ach-org">Lembaga Bina Prestasi Nusantara &amp; HMD Kimia Universitas Indonesia</div>
+        <span class="ach-badge gold">Emas + Best Award</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">22–23 Nov 2024</span>
+    </div>
+    <div class="ach-item">
+      <div class="ach-medal silver">🥈</div>
+      <div class="ach-body">
+        <div class="ach-title">Olimpiade Sains Prestasi Pelajar — Biologi</div>
+        <div class="ach-org">Lembaga Prestasi Pelajar &amp; HIMAFI ITB</div>
+        <span class="ach-badge silver">Perak</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">04 Okt 2025</span>
+    </div>
+    <div class="ach-item">
+      <div class="ach-medal blue">🏅</div>
+      <div class="ach-body">
+        <div class="ach-title">Academic Nusantara Olympiad 1.0 (AMNO) — Bahasa Inggris, Intermediate Level</div>
+        <div class="ach-org">PT. Pusat Prestasi Nusantara</div>
+        <span class="ach-badge blue">Peserta A+</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">11 Agt 2024</span>
+    </div>
+    <div class="ach-item">
+      <div class="ach-medal blue">📝</div>
+      <div class="ach-body">
+        <div class="ach-title">AMSAC Vol. 2 2025 — Essay</div>
+        <div class="ach-org">UGM &amp; Kemenkes RI</div>
+        <span class="ach-badge blue">Peserta</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">10 Mei 2025</span>
+    </div>
+  </div>
+
+  <div id="tab-smp" class="ach-panel reveal">
+    <div class="ach-item">
+      <div class="ach-medal gold">🥇</div>
+      <div class="ach-body">
+        <div class="ach-title">Kompetisi Biologi Siswa Indonesia — Biologi</div>
+        <div class="ach-org">Pusat Olimpiade Pelajar &amp; Smart Student</div>
+        <span class="ach-badge gold">Emas</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">14 Mei 2023</span>
+    </div>
+    <div class="ach-item">
+      <div class="ach-medal silver">🥈</div>
+      <div class="ach-body">
+        <div class="ach-title">Olimpiade Bahasa — Bahasa Indonesia</div>
+        <div class="ach-org">Olimpiade Indonesia &amp; Pusat Olimpiade Pelajar</div>
+        <span class="ach-badge silver">Perak</span>
+        <span class="ach-badge blue" style="margin-left:4px;">Nasional</span>
+      </div>
+      <span class="ach-date">12 Apr 2023</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section id="interests">
+  <div class="reveal">
+    <p class="section-label">Outside the Lab</p>
+    <h2 class="section-title">Interests</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="int-grid">
+    <div class="int-card reveal">
+      <span class="int-emoji">✍️</span>
+      <div class="int-title">Menulis</div>
+      <div class="int-desc">Hobi yang bikin pegel tapi menyenangkan. Sering mencatat langsung di HP biar lebih simpel dan spontan.</div>
+    </div>
+    <div class="int-card reveal">
+      <span class="int-emoji">🧬</span>
+      <div class="int-title">Biologi Manusia & Hewan</div>
+      <div class="int-desc">Suka banget eksplorasi tubuh manusia dan hewan — anatomi, fisiologi, sampai kedokteran. Tumbuhan? Bikin puyung dikit hehe.</div>
+    </div>
+    <div class="int-card reveal">
+      <span class="int-emoji">🎵</span>
+      <div class="int-title">K-Pop & Music</div>
+      <div class="int-desc">Le Sserafim &amp; Ariana Grande adalah artis favorit. Spotify Wrapped tiap tahun pasti penuh lagu mereka!</div>
+    </div>
+    <div class="int-card reveal">
+      <span class="int-emoji">🐱</span>
+      <div class="int-title">Cat-Holic Person</div>
+      <div class="int-desc">Punya kucing di rumah dan suka banget sama mereka. Kucing itu selalu bikin hari jadi lebih baik hehe.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Connect</p>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="divider" style="margin: 0 auto 2.5rem;"></div>
+  </div>
+  <div class="contact-card reveal">
+    <p>Mau ngobrol, kolaborasi, atau sekadar say hi? Temukan aku di sosial media berikut!</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/hugaabrieel/" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://www.threads.com/@hugaabrieel" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 1.5-.8 2.8-2 3.5"/>
+          <path d="M14 15.5c-2.5 1.5-5 .5-5-2"/>
+        </svg>
+        Threads
+      </a>
+      <a href="https://x.com/hugaabrieel" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X (Twitter)
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">LGH Nababan</div>
+  <div class="footer-center">
+    <span class="footer-dna">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M8 3c0 4 8 4 8 8s-8 4-8 8"/>
+        <path d="M16 3c0 4-8 4-8 8s8 4 8 8"/>
+      </svg>
+      Made with curiosity &amp; science vibes
+    </span><br>
+    <span style="opacity:0.5; font-size:0.72rem;">© 2025 Lambok Gabriel Huga Nababan · SMAN 8 Jakarta</span>
+  </div>
+  <div class="footer-right" style="font-size:0.78rem; color:rgba(240,244,255,0.35);">Born 08.05.2007</div>
+</footer>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.ach-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.ach-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
