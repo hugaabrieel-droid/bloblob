@@ -22,16 +22,16 @@
   --sci-opacity:0.10;
 }
 [data-theme="light"]{
-  --bg-base:#e8f0fe;--bg2:#dce8fc;
-  --glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);
-  --glass-hover:rgba(255,255,255,0.80);
-  --glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);
-  --text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);
-  --nav-bg:rgba(220,232,252,0.85);--footer-bg:rgba(210,225,250,0.85);
-  --orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);
-  --orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);
-  --card-shine:rgba(255,255,255,0.55);
-  --sci-opacity:0.07;
+  --bg-base:#1a2035;--bg2:#1e2640;
+  --glass:rgba(255,255,255,0.07);--glass2:rgba(255,255,255,0.11);
+  --glass-hover:rgba(255,255,255,0.15);
+  --glass-border:rgba(255,255,255,0.12);--glass-border2:rgba(255,255,255,0.20);
+  --text:#e8f0ff;--muted:rgba(220,232,255,0.65);--muted2:rgba(220,232,255,0.38);
+  --nav-bg:rgba(20,28,52,0.82);--footer-bg:rgba(18,25,48,0.88);
+  --orb1:rgba(52,211,153,0.18);--orb2:rgba(139,92,246,0.22);
+  --orb3:rgba(244,114,182,0.16);--orb4:rgba(59,130,246,0.16);
+  --card-shine:rgba(255,255,255,0.08);
+  --sci-opacity:0.10;
 }
 :root{
   --accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;
@@ -43,15 +43,15 @@ html{scroll-behavior:smooth}
 body{
   font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);
   overflow-x:hidden;min-height:100vh;
-  transition:background 0.55s ease,color 0.55s ease;
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),color 0.6s cubic-bezier(0.4,0,0.2,1);
   user-select:none;-webkit-user-select:none;-moz-user-select:none;
 }
 
-.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.55s ease}
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.6s cubic-bezier(0.4,0,0.2,1)}
 
 .orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;
   animation:orbDrift 22s ease-in-out infinite alternate;
-  transition:background 0.55s ease,opacity 0.55s ease}
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.6s}
 .orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
 .orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
 .orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
@@ -82,7 +82,7 @@ body{
   background:var(--nav-bg);
   backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
   border-bottom:1px solid var(--glass-border);
-  transition:background 0.55s ease,border-color 0.55s ease;
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),border-color 0.6s;
 }
 .nav-logo{
   font-family:'DM Serif Display',serif;font-size:1.2rem;
@@ -170,14 +170,14 @@ section{
 .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-[data-theme="light"] .skill-bar-wrap{background:rgba(0,0,0,0.07)}
+[data-theme="light"] .skill-bar-wrap{background:rgba(255,255,255,0.08)}
 
 footer{
   position:relative;z-index:1;border-top:1px solid var(--glass-border);
   padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
   backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
-  transition:background 0.55s ease,border-color 0.55s ease;margin-bottom:100px;
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),border-color 0.6s;margin-bottom:100px;
 }
 .footer-logo{
   font-family:'DM Serif Display',serif;font-size:1.1rem;
@@ -193,9 +193,57 @@ footer{
   .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
   .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
 }
+
+/* ── LOADER ── */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  background:var(--bg-base);transition:opacity 0.6s ease,transform 0.6s ease;
+}
+#loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.loader-svg{width:180px;height:180px}
+.loader-text{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:0.5}50%{opacity:1}}
+
 </style>
 </head>
 <body>
+<div id="loader">
+  <svg class="loader-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ld1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#A78BFA"/>
+      </linearGradient>
+      <linearGradient id="ld2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#F9A8D4"/>
+      </linearGradient>
+    </defs>
+    <!-- Outer benzene ring rotating -->
+    <g transform="translate(90,90)">
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="6s" repeatCount="indefinite" additive="sum"/>
+      <polygon points="0,-52 45,-26 45,26 0,52 -45,26 -45,-26" fill="none" stroke="url(#ld1)" stroke-width="2"/>
+      <polygon points="0,-35 30,-17.5 30,17.5 0,35 -30,17.5 -30,-17.5" fill="none" stroke="url(#ld2)" stroke-width="1.5" stroke-dasharray="5 4"/>
+    </g>
+    <!-- Counter-rotate inner hexagon -->
+    <g transform="translate(90,90)">
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="4s" repeatCount="indefinite" additive="sum"/>
+      <polygon points="0,-20 17,-10 17,10 0,20 -17,10 -17,-10" fill="none" stroke="rgba(249,168,212,0.6)" stroke-width="1.5"/>
+    </g>
+    <!-- Electron orbiting -->
+    <circle cx="90" cy="38" r="5" fill="#6EE7B7" opacity="0.9">
+      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90" cy="38" r="3" fill="#A78BFA" opacity="0.7">
+      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="-360 90 90" dur="3.1s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Center nucleus pulse -->
+    <circle cx="90" cy="90" r="8" fill="url(#ld1)" opacity="0.9">
+      <animate attributeName="r" values="8;11;8" dur="1.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+  <div class="loader-text">✦ Mixing elements, growing organisms. Hang tight!~ ✦</div>
+</div>
 <div class="bg-static"></div>
 <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
 <div id="sci-canvas"></div>
@@ -343,6 +391,15 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
     canvas.appendChild(node);
   });
 })();
+
+/* loader */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('out');
+    setTimeout(()=>document.getElementById('loader').style.display='none',650);
+  },2200);
+});
+
 </script>
 </body>
 </html>
