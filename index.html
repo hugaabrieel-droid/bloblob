@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home · Hugaabrieel</title>
+<title>About · Hugaabrieel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -15,33 +15,211 @@
   --glass-hover:rgba(255,255,255,0.16);
   --glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);
   --text:#f0f4ff;--muted:rgba(240,244,255,0.55);--muted2:rgba(240,244,255,0.35);
-  --nav-bg:rgba(5,10,24,0.70);--footer-bg:rgba(5,10,24,0.80);
+  --nav-bg:rgba(5,10,24,0.72);--footer-bg:rgba(5,10,24,0.80);
   --orb1:rgba(110,231,183,0.13);--orb2:rgba(167,139,250,0.15);
   --orb3:rgba(249,168,212,0.10);--orb4:rgba(96,165,250,0.10);
   --card-shine:rgba(255,255,255,0.04);
+  --sci-opacity:0.10;
 }
 [data-theme="light"]{
-  --bg-base:#e8f0fe;--bg2:#dce8fc;
-  --glass:rgba(255,255,255,0.55);--glass2:rgba(255,255,255,0.72);
-  --glass-hover:rgba(255,255,255,0.80);
-  --glass-border:rgba(100,140,200,0.22);--glass-border2:rgba(100,140,200,0.40);
-  --text:#0d1b3e;--muted:rgba(13,27,62,0.60);--muted2:rgba(13,27,62,0.35);
-  --nav-bg:rgba(220,232,252,0.80);--footer-bg:rgba(210,225,250,0.85);
-  --orb1:rgba(52,211,153,0.20);--orb2:rgba(139,92,246,0.18);
-  --orb3:rgba(244,114,182,0.15);--orb4:rgba(59,130,246,0.15);
-  --card-shine:rgba(255,255,255,0.55);
+  --bg-base:#1a2035;--bg2:#1e2640;
+  --glass:rgba(255,255,255,0.07);--glass2:rgba(255,255,255,0.11);
+  --glass-hover:rgba(255,255,255,0.15);
+  --glass-border:rgba(255,255,255,0.12);--glass-border2:rgba(255,255,255,0.20);
+  --text:#e8f0ff;--muted:rgba(220,232,255,0.65);--muted2:rgba(220,232,255,0.38);
+  --nav-bg:rgba(20,28,52,0.82);--footer-bg:rgba(18,25,48,0.88);
+  --orb1:rgba(52,211,153,0.18);--orb2:rgba(139,92,246,0.22);
+  --orb3:rgba(244,114,182,0.16);--orb4:rgba(59,130,246,0.16);
+  --card-shine:rgba(255,255,255,0.08);
+  --sci-opacity:0.10;
 }
 :root{
   --accent1:#6EE7B7;--accent2:#A78BFA;--accent3:#F9A8D4;--accent4:#60A5FA;
-  --gold:#FFD27F;--silver:#C8D6E5;
+  --gold:#FFD27F;
   --blur:blur(20px);--blur2:blur(32px);
 }
 
 html{scroll-behavior:smooth}
 body{
   font-family:'Outfit',sans-serif;background:var(--bg-base);color:var(--text);
-  overflow-x:hidden;min-height:100vh;transition:background 0.55s ease,color 0.55s ease;
-  user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;
+  overflow-x:hidden;min-height:100vh;
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),color 0.6s cubic-bezier(0.4,0,0.2,1);
+  user-select:none;-webkit-user-select:none;-moz-user-select:none;
+}
+
+.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.6s cubic-bezier(0.4,0,0.2,1)}
+
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;
+  animation:orbDrift 22s ease-in-out infinite alternate;
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.6s}
+.orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px}
+.orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
+.orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
+.orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
+@keyframes orbDrift{
+  0%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-20px) scale(1.06)}
+  66%{transform:translate(-15px,35px) scale(0.96)}
+  100%{transform:translate(20px,15px) scale(1.04)}
+}
+
+/* sci particles */
+#sci-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sci-elem{position:absolute;pointer-events:none;opacity:0;animation:sciFloat linear infinite;color:var(--accent1);}
+@keyframes sciFloat{
+  0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.85)}
+  8%{opacity:var(--sci-opacity)}
+  85%{opacity:calc(var(--sci-opacity)*0.5)}
+  100%{opacity:0;transform:translateY(-110vh) rotate(var(--rot,360deg)) scale(1.1)}
+}
+.hex-ring{position:absolute;border-radius:50%;border:1.5px solid;animation:hexSpin linear infinite;opacity:0.07;transition:border-color 0.55s}
+@keyframes hexSpin{from{transform:rotate(0deg) scale(1)}to{transform:rotate(360deg) scale(1.04)}}
+.mol-node{position:absolute;width:6px;height:6px;border-radius:50%;animation:molPulse 3s ease-in-out infinite;opacity:0.12}
+@keyframes molPulse{0%,100%{transform:scale(1);opacity:0.12}50%{transform:scale(1.8);opacity:0.22}}
+
+.top-bar{
+  position:fixed;top:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;
+  background:var(--nav-bg);
+  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border-bottom:1px solid var(--glass-border);
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),border-color 0.6s;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;font-size:1.2rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.01em;cursor:pointer;text-decoration:none;
+}
+.theme-btn{
+  width:52px;height:28px;border-radius:999px;cursor:pointer;
+  border:1.5px solid var(--glass-border2);background:var(--glass2);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  position:relative;overflow:hidden;
+  transition:background 0.35s,border-color 0.35s,box-shadow 0.35s;flex-shrink:0;
+}
+.theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
+.theme-thumb{
+  position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .theme-thumb{transform:translateX(24px)}
+[data-theme="light"] .theme-thumb{transform:translateX(0px)}
+
+.bottom-nav{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);-webkit-backdrop-filter:var(--blur2) saturate(2);
+  border:1.5px solid var(--glass-border2);
+  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
+  transition:background 0.4s,border-color 0.4s;
+}
+.bnav-btn{
+  padding:0.52rem 1.15rem;border-radius:999px;font-size:0.78rem;font-weight:600;
+  letter-spacing:0.05em;cursor:pointer;text-transform:uppercase;border:none;
+  background:transparent;color:var(--muted);
+  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;
+  text-decoration:none;display:inline-block;
+}
+.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
+.bnav-btn.active{
+  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
+  color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.bnav-btn.active::before{
+  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:18px;height:2.5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+}
+
+section{
+  padding:7rem 3rem 5rem;max-width:900px;margin:0 auto;
+  position:relative;z-index:1;animation:pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both;
+  display:flex;flex-direction:column;align-items:center;
+}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.4rem;text-align:center}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);color:var(--text);line-height:1.15;margin-bottom:0.8rem;text-align:center}
+.divider{width:40px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));margin:0 auto 2.5rem}
+
+.about-card{
+  max-width:680px;width:100%;padding:2.5rem;border-radius:28px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.15);
+  margin-bottom:1.5rem;animation:fadein 0.8s 0.1s ease both;
+  position:relative;overflow:hidden;
+}
+.about-card::before{
+  content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);pointer-events:none;
+}
+.about-card p{color:var(--muted);line-height:1.85;font-size:0.95rem;margin-bottom:1.1rem}
+.about-card p:last-child{margin-bottom:0}
+.about-card p strong{color:var(--text);font-weight:600}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1.5rem}
+.stat-card{
+  padding:1rem;border-radius:16px;text-align:center;
+  background:var(--glass);border:1px solid var(--glass-border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1}
+.stat-num.teal{color:var(--accent1)}.stat-num.purple{color:var(--accent2)}.stat-num.pink{color:var(--accent3)}
+.stat-label{font-size:0.7rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase}
+
+.connect-card{
+  max-width:680px;width:100%;padding:2.2rem 2rem;border-radius:28px;
+  background:var(--glass2);backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
+  border:1px solid var(--glass-border2);
+  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 var(--card-shine);
+  animation:fadein 0.8s 0.2s ease both;
+}
+.card-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.2rem}
+.card-label span{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)}
+.connect-card p{color:var(--muted);margin-bottom:1.6rem;line-height:1.7;font-size:0.92rem}
+.social-links{display:flex;justify-content:center;gap:0.9rem;flex-wrap:wrap}
+.social-btn{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.65rem 1.35rem;border-radius:14px;font-size:0.84rem;font-weight:600;
+  text-decoration:none;background:var(--glass);border:1.5px solid var(--glass-border2);color:var(--text);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),background 0.22s,box-shadow 0.22s;
+  user-select:none;
+}
+.social-btn:hover{transform:translateY(-4px) scale(1.05);background:var(--glass2);box-shadow:0 6px 20px rgba(0,0,0,0.18)}
+.social-btn:active{transform:scale(0.97)}
+.social-btn svg{width:18px;height:18px;flex-shrink:0}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+footer{
+  position:relative;z-index:1;border-top:1px solid var(--glass-border);
+  padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
+  backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
+  transition:background 0.6s cubic-bezier(0.4,0,0.2,1),border-color 0.6s;margin-bottom:100px;
+}
+.footer-logo{
+  font-family:'DM Serif Display',serif;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
+
+@media(max-width:768px){
+  .top-bar{padding:0.9rem 1.2rem}
+  section{padding:5.5rem 1.3rem 5rem}
+  .stats-row{grid-template-columns:repeat(3,1fr)}
+  footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}
+  .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
+  .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
 }
 
 /* ── LOADER ── */
@@ -55,353 +233,110 @@ body{
 .loader-text{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0.04em;animation:blink 1.8s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.5}50%{opacity:1}}
 
-/* ── BG ── */
-.bg-static{position:fixed;inset:0;z-index:0;background:var(--bg-base);transition:background 0.55s ease}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;animation:orbDrift 20s ease-in-out infinite alternate;transition:background 0.55s ease}
-.orb1{width:500px;height:500px;background:var(--orb1);top:-120px;left:-150px;animation-delay:0s}
-.orb2{width:400px;height:400px;background:var(--orb2);bottom:-80px;right:-100px;animation-delay:-5s}
-.orb3{width:280px;height:280px;background:var(--orb3);top:40%;left:60%;animation-delay:-10s}
-.orb4{width:320px;height:320px;background:var(--orb4);top:20%;right:20%;animation-delay:-8s}
-@keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.06)}66%{transform:translate(-15px,35px) scale(0.96)}100%{transform:translate(20px,15px) scale(1.04)}}
-
-/* ── SCIENCE PARTICLES ── */
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-/* bio+chem sci particles */
-.sci-elem{position:absolute;pointer-events:none;opacity:0;animation:sciFloat linear infinite;}
-@keyframes sciFloat{0%{opacity:0;transform:translateY(0) rotate(0deg) scale(0.85)}8%{opacity:0.13}85%{opacity:0.06}100%{opacity:0;transform:translateY(-110vh) rotate(var(--rot,360deg)) scale(1.1)}}
-.hex-ring{position:absolute;border-radius:50%;border:1.5px solid;animation:hexSpin linear infinite;opacity:0.07;transition:border-color 0.55s}
-@keyframes hexSpin{from{transform:rotate(0deg) scale(1)}to{transform:rotate(360deg) scale(1.04)}}
-.mol-node{position:absolute;width:6px;height:6px;border-radius:50%;animation:molPulse 3s ease-in-out infinite;opacity:0.12}
-@keyframes molPulse{0%,100%{transform:scale(1);opacity:0.12}50%{transform:scale(1.8);opacity:0.22}}
-
-/* ── THEME TOGGLE ── */
-.theme-btn{
-  width:52px;height:28px;border-radius:999px;cursor:pointer;
-  border:1.5px solid var(--glass-border2);background:var(--glass2);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-  position:relative;overflow:hidden;
-  transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;flex-shrink:0;
-}
-.theme-btn:hover{box-shadow:0 0 16px rgba(110,231,183,0.35)}
-.theme-thumb{
-  position:absolute;top:3px;left:3px;
-  width:20px;height:20px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.3);
-}
-/* dark = right, light = left */
-[data-theme="dark"] .theme-thumb{transform:translateX(24px)}
-[data-theme="light"] .theme-thumb{transform:translateX(0px)}
-
-/* ── BOTTOM NAV ── */
-.bottom-nav{
-  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-  z-index:150;display:flex;gap:0.25rem;padding:0.45rem 0.6rem;border-radius:999px;
-  background:var(--glass2);backdrop-filter:var(--blur2) saturate(2);
-  -webkit-backdrop-filter:var(--blur2) saturate(2);
-  border:1.5px solid var(--glass-border2);
-  box-shadow:0 8px 40px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.18);
-  transition:background 0.4s,border-color 0.4s;
-}
-.bnav-btn{
-  padding:0.52rem 1.15rem;border-radius:999px;
-  font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
-  cursor:pointer;text-transform:uppercase;border:none;background:transparent;color:var(--muted);
-  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative;
-}
-.bnav-btn:hover{color:var(--text);transform:scale(1.06)}
-.bnav-btn.active{
-  background:linear-gradient(135deg,rgba(110,231,183,0.22),rgba(167,139,250,0.20));
-  color:var(--text);box-shadow:0 2px 14px rgba(110,231,183,0.20),inset 0 1px 0 rgba(255,255,255,0.15);
-}
-.bnav-btn.active::before{
-  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
-  width:18px;height:2.5px;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-}
-
-/* ── NAV LOGO AREA (no full nav, just logo + theme) ── */
-.top-bar{
-  position:fixed;top:0;width:100%;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.9rem 2.5rem;
-  background:var(--nav-bg);
-  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
-  border-bottom:1px solid var(--glass-border);
-  transition:background 0.5s,border-color 0.5s;
-}
-.nav-logo{
-  font-family:'DM Serif Display',serif;font-size:1.2rem;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  letter-spacing:0.01em;cursor:pointer;text-decoration:none;
-}
-
-/* ── HERO ── */
-#hero-page{
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  gap:1.6rem;text-align:center;padding:9rem 2rem 6rem;min-height:100vh;
-  position:relative;z-index:1;animation:pageIn 0.6s ease both;
-}
-@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes fadein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-
-.hero-tag{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  background:rgba(110,231,183,0.10);border:1px solid rgba(110,231,183,0.28);
-  color:var(--accent1);font-size:0.78rem;font-weight:600;
-  letter-spacing:0.12em;text-transform:uppercase;
-  padding:0.4rem 1.1rem;border-radius:999px;animation:fadein 0.7s ease both;
-}
-.hero-name{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(3rem,6.5vw,5.5rem);line-height:1.15;
-  padding-bottom:0.08em;
-  background:linear-gradient(135deg,var(--text) 20%,var(--accent1) 55%,var(--accent2) 80%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:fadein 0.8s 0.1s ease both;
-}
-[data-theme="light"] .hero-name{
-  background:linear-gradient(135deg,#0d1b3e 20%,#059669 55%,#7c3aed 80%);
-  -webkit-background-clip:text;background-clip:text;
-}
-.hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.75;animation:fadein 0.9s 0.2s ease both}
-.hero-pills{display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;animation:fadein 1s 0.3s ease both}
-.pill{
-  padding:0.38rem 0.95rem;border-radius:999px;font-size:0.8rem;font-weight:500;
-  background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
-  transition:transform 0.2s,background 0.2s,box-shadow 0.2s;cursor:default;
-  display:inline-flex;align-items:center;gap:0.35rem;
-}
-.pill:hover{transform:translateY(-2px) scale(1.04);background:var(--glass2);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
-.pill.teal{background:rgba(110,231,183,0.10);border-color:rgba(110,231,183,0.28);color:var(--accent1)}
-.pill.purple{background:rgba(167,139,250,0.10);border-color:rgba(167,139,250,0.28);color:var(--accent2)}
-.pill.pink{background:rgba(249,168,212,0.10);border-color:rgba(249,168,212,0.28);color:var(--accent3)}
-.pill.gold{background:rgba(255,210,127,0.12);border-color:rgba(255,210,127,0.32);color:var(--gold)}
-.pill.rose{background:rgba(249,168,212,0.12);border-color:rgba(249,168,212,0.35);color:#f472b6}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadein 1s 0.4s ease both}
-
-/* ── ABOUT GLASS CARD ── */
-.about-glass{
-  max-width:760px;width:100%;margin:1rem auto 0;padding:2.5rem;
-  border-radius:28px;background:var(--glass2);
-  backdrop-filter:var(--blur2) saturate(1.8);-webkit-backdrop-filter:var(--blur2) saturate(1.8);
-  border:1px solid var(--glass-border2);
-  box-shadow:0 8px 48px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.15);
-  text-align:left;animation:fadein 1s 0.5s ease both;position:relative;overflow:hidden;
-}
-.about-glass::before{
-  content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(110,231,183,0.12) 0%,transparent 70%);pointer-events:none;
-}
-.about-glass p{color:var(--muted);line-height:1.8;font-size:0.95rem}
-.about-glass p strong{color:var(--text);font-weight:600}
-.about-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.1rem}
-.about-label span{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent1)}
-.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1.5rem}
-.stat-card{
-  padding:1rem;border-radius:16px;text-align:center;
-  background:var(--glass);border:1px solid var(--glass-border);
-  transition:transform 0.2s,box-shadow 0.2s;
-}
-.stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
-.stat-num{font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1}
-.stat-num.teal{color:var(--accent1)}.stat-num.purple{color:var(--accent2)}.stat-num.pink{color:var(--accent3)}
-.stat-label{font-size:0.7rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase}
-
-/* ── BTNS ── */
-.btn{
-  padding:0.75rem 2rem;border-radius:999px;font-size:0.88rem;
-  font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;
-  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.22s;
-  position:relative;overflow:hidden;border:none;
-}
-.btn:hover{transform:translateY(-3px) scale(1.03)}
-.btn:active{transform:scale(0.97)}
-.btn-primary{
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#04081a;
-  box-shadow:0 0 20px rgba(110,231,183,0.28);
-}
-.btn-primary:hover{box-shadow:0 0 36px rgba(110,231,183,0.50)}
-.btn-ghost{
-  background:var(--glass2);border:1px solid var(--glass-border2);color:var(--text);
-  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.40);background:var(--glass-hover)}
-
-/* ── FOOTER ── */
-footer{
-  position:relative;z-index:1;border-top:1px solid var(--glass-border);
-  padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:0.75rem;background:var(--footer-bg);
-  backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);
-  transition:background 0.5s,border-color 0.5s;margin-bottom:100px;
-}
-.footer-logo{
-  font-family:'DM Serif Display',serif;font-size:1.1rem;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.footer-copy{font-size:0.76rem;color:var(--muted2);display:flex;align-items:center;gap:0.4rem}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
-.reveal.visible{opacity:1;transform:none}
-
-/* ── LIGHT MODE ── */
-[data-theme="light"] .skill-bar-wrap{background:rgba(0,0,0,0.07)}
-[data-theme="light"] .orb1{opacity:0.7}[data-theme="light"] .orb2{opacity:0.7}
-
-@media(max-width:768px){
-  .top-bar{padding:0.9rem 1.2rem}
-  #hero-page{padding:6rem 1.3rem 8rem}
-  .about-glass{padding:1.5rem}
-  .about-stats{grid-template-columns:repeat(3,1fr)}
-  footer{flex-direction:column;text-align:center;padding:1.2rem;margin-bottom:90px}
-  .bottom-nav{bottom:14px;padding:0.35rem 0.4rem}
-  .bnav-btn{padding:0.45rem 0.75rem;font-size:0.7rem}
-}
 </style>
 </head>
 <body>
-
-<!-- LOADER -->
 <div id="loader">
   <svg class="loader-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="dnaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="ld1" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#A78BFA"/>
       </linearGradient>
-      <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="ld2" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#F9A8D4"/>
       </linearGradient>
     </defs>
-    <path d="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165" fill="none" stroke="url(#dnaGrad)" stroke-width="3" stroke-linecap="round">
-      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165;M70,20 Q30,45 70,70 Q110,95 70,120 Q30,145 70,165;M70,20 Q110,45 70,70 Q30,95 70,120 Q110,145 70,165"/>
-    </path>
-    <path d="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165" fill="none" stroke="url(#dnaGrad2)" stroke-width="3" stroke-linecap="round">
-      <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165;M110,20 Q150,45 110,70 Q70,95 110,120 Q150,145 110,165;M110,20 Q70,45 110,70 Q150,95 110,120 Q70,145 110,165"/>
-    </path>
-    <g stroke="#6EE7B7" stroke-width="1.5" opacity="0.55">
-      <line x1="70" y1="45" x2="110" y2="45"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
-      <line x1="70" y1="70" x2="110" y2="70"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
-      <line x1="70" y1="95" x2="110" y2="95"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
-      <line x1="70" y1="120" x2="110" y2="120"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="30;70;30"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="150;110;150"/></line>
-      <line x1="70" y1="145" x2="110" y2="145"><animate attributeName="x1" dur="2.5s" repeatCount="indefinite" values="70;30;70"/><animate attributeName="x2" dur="2.5s" repeatCount="indefinite" values="110;150;110"/></line>
-    </g>
-    <circle cx="90" cy="90" r="22" fill="none" stroke="rgba(167,139,250,0.35)" stroke-width="1" stroke-dasharray="4 3">
+    <!-- Orbital rings at different tilts -->
+    <ellipse cx="90" cy="90" rx="70" ry="22" fill="none" stroke="rgba(110,231,183,0.30)" stroke-width="1.5">
+      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="90" cy="90" rx="70" ry="22" fill="none" stroke="rgba(167,139,250,0.28)" stroke-width="1.5" transform="rotate(60 90 90)">
+      <animateTransform attributeName="transform" type="rotate" from="60 90 90" to="420 90 90" dur="5.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="90" cy="90" rx="70" ry="22" fill="none" stroke="rgba(249,168,212,0.25)" stroke-width="1.5" transform="rotate(120 90 90)">
+      <animateTransform attributeName="transform" type="rotate" from="120 90 90" to="480 90 90" dur="7s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Electrons on each orbit -->
+    <circle cx="160" cy="90" r="5.5" fill="#6EE7B7" opacity="0.9">
       <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="112" cy="90" r="5" fill="#A78BFA" opacity="0.8">
-      <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="4s" repeatCount="indefinite"/>
+    <circle cx="160" cy="90" r="4.5" fill="#A78BFA" opacity="0.85">
+      <animateTransform attributeName="transform" type="rotate" from="60 90 90" to="420 90 90" dur="5.5s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="90" cy="90" r="7" fill="url(#dnaGrad)" opacity="0.9">
-      <animate attributeName="r" values="7;9;7" dur="1.8s" repeatCount="indefinite"/>
+    <circle cx="160" cy="90" r="4" fill="#F9A8D4" opacity="0.80">
+      <animateTransform attributeName="transform" type="rotate" from="120 90 90" to="480 90 90" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Central nucleus glow -->
+    <circle cx="90" cy="90" r="14" fill="url(#ld1)" opacity="0.85">
+      <animate attributeName="r" values="14;18;14" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.85;0.5;0.85" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90" cy="90" r="7" fill="url(#ld2)" opacity="1">
+      <animate attributeName="r" values="7;9;7" dur="1.4s" repeatCount="indefinite"/>
     </circle>
   </svg>
   <div class="loader-text">✦ Mixing elements, growing organisms. Hang tight!~ ✦</div>
 </div>
-
 <div class="bg-static"></div>
-<div class="orb orb1"></div><div class="orb orb2"></div>
-<div class="orb orb3"></div><div class="orb orb4"></div>
-<div id="particles"></div>
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div>
+<div id="sci-canvas"></div>
 
-<!-- TOP BAR (logo + theme only) -->
 <div class="top-bar">
   <a href="index.html" class="nav-logo">Hugaabrieel</a>
   <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode">
-    <div class="theme-thumb" id="themeThumb">
-      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a">
-        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
+    <div class="theme-thumb">
+      <svg id="themeIconSun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none;color:#04081a"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="themeIconMoon" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#04081a"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </div>
   </button>
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <a href="index.html" class="bnav-btn active">Home</a>
+  <a href="index.html" class="bnav-btn">Home</a>
   <a href="skills.html" class="bnav-btn">Skills</a>
   <a href="achievements.html" class="bnav-btn">Achievements</a>
   <a href="interests.html" class="bnav-btn">Interests</a>
-  <a href="about.html" class="bnav-btn">About</a>
+  <a href="about.html" class="bnav-btn active">About</a>
 </div>
 
-<!-- HERO -->
-<div id="hero-page">
-  <span class="hero-tag">
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
-    Student · Science Fan · Writer
-  </span>
-  <h1 class="hero-name">Lambok Gabriel<br>Huga Nababan</h1>
-  <p class="hero-sub">A student at SMAN 8 Jakarta, passionate about Biology, Chemistry, and the English Language. Born in May and a Taurus person</p>
-  <div class="hero-pills">
-    <span class="pill teal">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      Biology Enthusiast
-    </span>
-    <span class="pill purple">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-      Chemistry Lover
-    </span>
-    <span class="pill pink">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Writer
-    </span>
-    <span class="pill gold">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      K-Pop Fan
-    </span>
-    <span class="pill rose">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      Cat Person
-    </span>
-  </div>
-  <div class="hero-cta">
-    <a href="achievements.html" class="btn btn-primary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
-      See Achievements
-    </a>
-    <a href="about.html" class="btn btn-ghost">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      About Me
-    </a>
+<section>
+  <div class="reveal" style="text-align:center;width:100%">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">The Person</h2>
+    <div class="divider"></div>
   </div>
 
-  <!-- Quick about card -->
-  <div class="about-glass">
-    <div class="about-label">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent1)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <span>Quick Introduction</span>
+  <div class="connect-card reveal">
+    <div class="card-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Let's Connect</span>
     </div>
-    <p>Hi there! I'm <strong>Lambok Gabriel Huga Nababan</strong>, the creator behind this website. My close friends and family usually call me <strong>Lambok</strong>, though some prefer to go with my middle names, <strong>Gabriel</strong> or <strong>Huga</strong>. Currently, I'm a student at <strong>SMAN 8 Jakarta</strong>. Fun fact: I was born in May, which makes my Chinese zodiac the <strong>Pig</strong>. I'm also a sleepy bookworm person too.</p>
-    <div class="about-stats">
-      <div class="stat-card">
-        <div class="stat-num teal">9+</div>
-        <div class="stat-label">Achievements</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num purple">6</div>
-        <div class="stat-label">Medals</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num pink">&#9801;</div>
-        <div class="stat-label">Taurus Person</div>
-      </div>
+    <p>Looking to chat, team up on a project, or just say hi? You can find me on the platforms below!</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/hugaabrieel/" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://www.threads.com/@hugaabrieel" target="_blank" class="social-btn">
+        <svg viewBox="0 0 192 192" fill="currentColor" width="18" height="18">
+          <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0135 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0805 0H96.9198C68.8450 0.19447 47.0466 9.6418 32.3813 28.0793C19.2224 44.4864 12.4066 67.3157 12.1893 95.9325L12.1893 96L12.1893 96.0675C12.4066 124.684 19.2224 147.514 32.3813 163.921C47.0466 182.358 68.8450 191.806 96.9198 192H97.0805C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+        </svg>
+        Threads
+      </a>
+      <a href="https://x.com/hugaabrieel" target="_blank" class="social-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X (Twitter)
+      </a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-logo">Hugaabrieel</span>
   <div class="footer-copy">
@@ -411,23 +346,34 @@ footer{
 </footer>
 
 <script>
-/* block copy */
 document.addEventListener('copy',e=>{e.preventDefault();return false});
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 
-/* loader */
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    document.getElementById('loader').classList.add('out');
-    setTimeout(()=>document.getElementById('loader').style.display='none',650);
-  },2200);
-});
+function toggleTheme(){
+  const html=document.documentElement;
+  const newTheme=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',newTheme);
+  localStorage.setItem('theme',newTheme);
+  updateThemeIcons(newTheme);
+}
+function updateThemeIcons(t){
+  document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';
+  document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
+else{updateThemeIcons('dark');}
 
-/* bio+chem particles */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
+},{threshold:0.10});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* bio+chem canvas */
 (function buildSciCanvas(){
-  const canvas=document.getElementById('particles');
+  const canvas=document.getElementById('sci-canvas');
   const colors=['var(--accent1)','var(--accent2)','var(--accent3)','var(--accent4)'];
   const shapes=[
     `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" width="32" height="32"><ellipse cx="20" cy="20" rx="18" ry="7"/><ellipse cx="20" cy="20" rx="18" ry="7" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="18" ry="7" transform="rotate(120 20 20)"/><circle cx="20" cy="20" r="2.5" fill="currentColor"/></svg>`,
@@ -436,10 +382,8 @@ window.addEventListener('load',()=>{
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M10 2h4M9 2v7L4 18a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 18l-5-9V2"/><path d="M6 17h12" stroke-dasharray="2 2"/></svg>`,
     `<svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2" width="28" height="28"><ellipse cx="18" cy="18" rx="15" ry="11"/><ellipse cx="18" cy="18" rx="8" ry="5" stroke-dasharray="2 2"/><circle cx="13" cy="16" r="1.5" fill="currentColor" opacity="0.5"/></svg>`,
     `<svg viewBox="0 0 40 28" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="22"><circle cx="20" cy="16" r="5"/><circle cx="6" cy="6" r="3.5"/><circle cx="34" cy="6" r="3.5"/><line x1="20" y1="11" x2="9" y2="8"/><line x1="20" y1="11" x2="31" y2="8"/></svg>`,
-    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M11 20A7 7 0 0 1 4 13c0-3.87 3.13-7 7-7 .5 0 1 .06 1.5.17"/><path d="M20 4c-4 0-8 2-10 6s-2 6 0 10"/><path d="M12 10l4-4"/></svg>`,
-    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="22" height="22"><path d="M6 18h12M10 18v-3"/><rect x="9" y="2" width="6" height="10" rx="3"/><circle cx="12" cy="7" r="2"/></svg>`,
   ];
-  for(let i=0;i<26;i++){
+  for(let i=0;i<20;i++){
     const el=document.createElement('div');
     el.className='sci-elem';
     el.style.color=colors[i%colors.length];
@@ -447,12 +391,15 @@ window.addEventListener('load',()=>{
     el.style.left=(Math.random()*98)+'%';
     el.style.bottom='-80px';
     el.style.setProperty('--rot',(Math.random()>0.5?1:-1)*Math.round(180+Math.random()*360)+'deg');
-    el.style.animationDelay=(Math.random()*18)+'s';
-    el.style.animationDuration=(12+Math.random()*12)+'s';
+    el.style.animationDelay=(Math.random()*20)+'s';
+    el.style.animationDuration=(14+Math.random()*12)+'s';
     canvas.appendChild(el);
   }
-  // hex rings
-  [{size:260,top:'8%',left:'-80px',color:'var(--accent1)',dur:'30s'},{size:180,bottom:'12%',right:'-60px',color:'var(--accent2)',dur:'24s'},{size:120,top:'48%',left:'43%',color:'var(--accent3)',dur:'19s'}].forEach(r=>{
+  const ringDefs=[
+    {size:220,top:'5%',left:'-60px',color:'var(--accent1)',dur:'28s'},
+    {size:160,bottom:'10%',right:'-50px',color:'var(--accent2)',dur:'22s'},
+  ];
+  ringDefs.forEach(r=>{
     const ring=document.createElement('div');
     ring.className='hex-ring';
     ring.style.cssText=`width:${r.size}px;height:${r.size}px;border-color:${r.color};animation-duration:${r.dur};`;
@@ -462,8 +409,7 @@ window.addEventListener('load',()=>{
     if(r.right) ring.style.right=r.right;
     canvas.appendChild(ring);
   });
-  // mol nodes
-  [{top:'22%',left:'14%',color:'#6EE7B7',delay:'0s'},{top:'66%',left:'82%',color:'#A78BFA',delay:'1.4s'},{top:'42%',left:'57%',color:'#F9A8D4',delay:'2.8s'},{top:'78%',left:'28%',color:'#60A5FA',delay:'0.6s'},{top:'32%',left:'74%',color:'#6EE7B7',delay:'1.9s'}].forEach(n=>{
+  [{top:'20%',left:'15%',color:'#6EE7B7',delay:'0s'},{top:'65%',left:'80%',color:'#A78BFA',delay:'1.2s'},{top:'40%',left:'55%',color:'#F9A8D4',delay:'2.5s'}].forEach(n=>{
     const node=document.createElement('div');
     node.className='mol-node';
     node.style.cssText=`top:${n.top};left:${n.left};background:${n.color};animation-delay:${n.delay};`;
@@ -471,25 +417,14 @@ window.addEventListener('load',()=>{
   });
 })();
 
-/* theme */
-function toggleTheme(){
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  const newTheme=isDark?'light':'dark';
-  html.setAttribute('data-theme',newTheme);
-  localStorage.setItem('theme',newTheme);
-  updateThemeIcons(newTheme);
-}
-function updateThemeIcons(t){
-  const sun=document.getElementById('themeIconSun');
-  const moon=document.getElementById('themeIconMoon');
-  if(t==='dark'){sun.style.display='none';moon.style.display='block'}
-  else{sun.style.display='block';moon.style.display='none'}
-}
-/* restore saved theme */
-const saved=localStorage.getItem('theme');
-if(saved){document.documentElement.setAttribute('data-theme',saved);updateThemeIcons(saved);}
-else{updateThemeIcons('dark');}
+/* loader */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('out');
+    setTimeout(()=>document.getElementById('loader').style.display='none',650);
+  },2200);
+});
+
 </script>
 </body>
 </html>
