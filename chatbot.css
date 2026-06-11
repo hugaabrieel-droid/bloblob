@@ -6,11 +6,11 @@
 /* ── TOGGLE BUTTON ── */
 #cb-toggle {
   position: fixed;
-  bottom: 100px;
+  bottom: 110px;
   right: 28px;
   z-index: 999;
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: 1.5px solid rgba(110,231,183,0.45);
   background: rgba(5,10,24,0.80);
@@ -53,7 +53,7 @@
 /* ── CHAT WINDOW ── */
 #cb-window {
   position: fixed;
-  bottom: 170px;
+  bottom: 182px;
   right: 28px;
   z-index: 998;
   width: 360px;
