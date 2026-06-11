@@ -178,13 +178,29 @@
 <!-- ═══════════════ HUGAABRIEEL CHATBOT ═══════════════ -->
 <button id="cb-toggle" aria-label="Buka chatbot">
   <div id="cb-notif-dot"></div>
-  <svg class="cb-icon-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6EE7B7" stroke-width="1.8" stroke-linecap="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-    <circle cx="8" cy="10" r="1" fill="#6EE7B7" stroke="none"/>
-    <circle cx="12" cy="10" r="1" fill="#6EE7B7" stroke="none"/>
-    <circle cx="16" cy="10" r="1" fill="#6EE7B7" stroke="none"/>
+  <svg class="cb-icon-open" width="28" height="28" viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cbDnaG1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6EE7B7"/>
+        <stop offset="100%" stop-color="#A78BFA"/>
+      </linearGradient>
+      <linearGradient id="cbDnaG2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#A78BFA"/>
+        <stop offset="100%" stop-color="#F9A8D4"/>
+      </linearGradient>
+    </defs>
+    <path d="M12,4 Q26,14 12,24 Q-2,34 12,44 Q26,54 12,64" stroke="url(#cbDnaG1)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <path d="M28,4 Q14,14 28,24 Q42,34 28,44 Q14,54 28,64" stroke="url(#cbDnaG2)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <line x1="12" y1="14" x2="28" y2="14" stroke="#6EE7B7" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+    <line x1="12" y1="24" x2="28" y2="24" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+    <line x1="12" y1="34" x2="28" y2="34" stroke="#6EE7B7" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+    <line x1="12" y1="44" x2="28" y2="44" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+    <circle cx="12" cy="14" r="2.5" fill="#6EE7B7"/>
+    <circle cx="28" cy="14" r="2.5" fill="#6EE7B7"/>
+    <circle cx="12" cy="34" r="2.5" fill="#A78BFA"/>
+    <circle cx="28" cy="34" r="2.5" fill="#A78BFA"/>
   </svg>
-  <svg class="cb-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F9A8D4" stroke-width="2" stroke-linecap="round">
+  <svg class="cb-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F9A8D4" stroke-width="2.2" stroke-linecap="round">
     <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
   </svg>
 </button>
@@ -418,11 +434,67 @@
   }
 
   /* ──────────────────────────────────────────
-     6. INIT
+     6. CSS AUTO-INJECT
+  ────────────────────────────────────────── */
+  function injectCSS() {
+    // Cari path folder chatbot.js berada, supaya chatbot.css di-load dari lokasi yang sama
+    const scripts = document.getElementsByTagName('script');
+    let base = '';
+    for (let s of scripts) {
+      if (s.src && s.src.includes('chatbot.js')) {
+        base = s.src.replace('chatbot.js', '');
+        break;
+      }
+    }
+    const link = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.href = base + 'chatbot.css';
+    document.head.appendChild(link);
+  }
+
+  /* ──────────────────────────────────────────
+     7. STATE PERSISTENCE (antar halaman)
+  ────────────────────────────────────────── */
+  function saveState() {
+    sessionStorage.setItem('cb_open', isOpen ? '1' : '0');
+    sessionStorage.setItem('cb_firstOpen', firstOpen ? '1' : '0');
+    // Simpan riwayat pesan sebagai HTML
+    const msgs = document.getElementById('cb-messages');
+    if (msgs) sessionStorage.setItem('cb_messages', msgs.innerHTML);
+  }
+
+  function restoreState() {
+    const wasOpen   = sessionStorage.getItem('cb_open') === '1';
+    const wasFFirst = sessionStorage.getItem('cb_firstOpen') !== '0';
+    const savedMsgs = sessionStorage.getItem('cb_messages');
+
+    if (savedMsgs) {
+      const msgs = document.getElementById('cb-messages');
+      if (msgs) {
+        msgs.innerHTML = savedMsgs;
+        firstOpen = false; // sudah pernah dibuka, jangan tampil greeting lagi
+      }
+    }
+
+    if (wasOpen) {
+      // Buka chatbot langsung tanpa greeting ulang
+      isOpen = false; // reset dulu supaya toggleChat() bisa flip
+      firstOpen = false;
+      toggleChat();
+    }
+  }
+
+  /* ──────────────────────────────────────────
+     8. INIT
   ────────────────────────────────────────── */
   function init() {
+    injectCSS();
     injectHTML();
     bindEvents();
+    restoreState();
+
+    // Simpan state setiap kali user mau pindah halaman
+    window.addEventListener('beforeunload', saveState);
   }
 
   // Run after DOM is ready
